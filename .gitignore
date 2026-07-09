@@ -1,0 +1,16 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
+
+# Node / tooling (not used by this static site, but safe to ignore)
+node_modules/
+npm-debug.log*
+
+# Local env / secrets — never commit
+.env
+.env.*
+*.pem

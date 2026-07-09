@@ -1,0 +1,99 @@
+/* ============================================================
+   Panderose — Color tokens
+   Dark-first palette for the defense / enterprise direction.
+   Base values first, then semantic aliases that the system uses.
+   ============================================================ */
+
+:root {
+  /* ── Brand blue ─────────────────────────────────────────── */
+  --pan-blue:        #0066b3;   /* primary accent (Pan Am blue) */
+  --pan-blue-hover:  #0077cc;   /* hover / brighter */
+  --pan-blue-deep:   #003870;   /* pressed / deep */
+  --pan-blue-bright: #2563eb;   /* signal blue, from the mark */
+  --pan-blue-sky:    #5b9fe0;   /* legible blue on near-black */
+
+  /* ── Neutrals · night (canvas → raised) ─────────────────── */
+  --night:    #0a0a0c;   /* base canvas */
+  --night-1:  #0f0f12;   /* section / panel */
+  --night-2:  #141417;   /* raised surface / card */
+  --night-3:  #1c1c20;   /* elevated / input */
+  --night-4:  #26262b;   /* hairline-strong fills */
+
+  /* ── Neutrals · paper (light theme) ─────────────────────── */
+  --paper:    #f6f4ef;   /* warm off-white */
+  --paper-2:  #efece4;
+  --paper-3:  #e6e2d7;
+
+  /* ── Ink (text on paper) ────────────────────────────────── */
+  --ink:    #0c0c0e;
+  --ink-2:  rgba(12, 12, 14, 0.66);
+  --ink-3:  rgba(12, 12, 14, 0.44);
+  --ink-4:  rgba(12, 12, 14, 0.20);
+
+  /* ── Bone (text on night) ───────────────────────────────── */
+  --bone:    #f5f3ee;
+  --bone-2:  rgba(245, 243, 238, 0.64);
+  --bone-3:  rgba(245, 243, 238, 0.40);
+  --bone-4:  rgba(245, 243, 238, 0.22);
+
+  /* ── Hairlines ──────────────────────────────────────────── */
+  --hair-night:        rgba(245, 243, 238, 0.10);
+  --hair-night-strong: rgba(245, 243, 238, 0.18);
+  --hair-paper:        rgba(12, 12, 14, 0.10);
+  --hair-paper-strong: rgba(12, 12, 14, 0.22);
+
+  /* ── Status ─────────────────────────────────────────────── */
+  --signal-ok:    #4aa56b;   /* operational / live */
+  --signal-warn:  #c98a2e;   /* degraded / in progress */
+  --signal-crit:  #d2544b;   /* critical / offline */
+  --signal-ok-on-night:   #6fce92;
+  --signal-warn-on-night: #e6ab57;
+  --signal-crit-on-night: #ef7a72;
+
+  /* ============================================================
+     SEMANTIC ALIASES — default scope is DARK (defense direction)
+     ============================================================ */
+  --surface-canvas:   var(--night);
+  --surface-section:  var(--night-1);
+  --surface-card:     var(--night-2);
+  --surface-raised:   var(--night-3);
+  --surface-fill:     var(--night-4);
+
+  --text-strong:  var(--bone);
+  --text-body:    var(--bone-2);
+  --text-muted:   var(--bone-3);
+  --text-faint:   var(--bone-4);
+
+  --border-hair:    var(--hair-night);
+  --border-strong:  var(--hair-night-strong);
+
+  --accent:        var(--pan-blue);
+  --accent-hover:  var(--pan-blue-hover);
+  --accent-press:  var(--pan-blue-deep);
+  --accent-text:   var(--pan-blue-sky);   /* accent that must read as text on night */
+
+  --focus-ring:   rgba(91, 159, 224, 0.55);
+  --selection-bg: var(--pan-blue);
+  --selection-fg: #ffffff;
+}
+
+/* ── Light theme scope ──────────────────────────────────────
+   Apply to any subtree: <div class="theme-paper"> … </div>
+   ─────────────────────────────────────────────────────────── */
+.theme-paper {
+  --surface-canvas:   var(--paper);
+  --surface-section:  var(--paper-2);
+  --surface-card:     var(--paper);
+  --surface-raised:   var(--paper-2);
+  --surface-fill:     var(--paper-3);
+
+  --text-strong:  var(--ink);
+  --text-body:    var(--ink-2);
+  --text-muted:   var(--ink-3);
+  --text-faint:   var(--ink-4);
+
+  --border-hair:    var(--hair-paper);
+  --border-strong:  var(--hair-paper-strong);
+
+  --accent-text:  var(--pan-blue);
+}

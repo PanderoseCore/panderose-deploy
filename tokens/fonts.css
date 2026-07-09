@@ -1,0 +1,9 @@
+/* ============================================================
+   Panderose — Webfonts
+   The brand sans is Helvetica Neue (a system stack, no binary to
+   ship). The signature monospace labels use JetBrains Mono,
+   loaded from Google Fonts. Swap in self-hosted files if you
+   need guaranteed offline rendering.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');

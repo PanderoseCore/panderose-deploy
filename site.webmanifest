@@ -1,0 +1,10 @@
+{
+  "name": "Panderose",
+  "short_name": "Panderose",
+  "description": "Defense software. Built by Panderose.",
+  "start_url": "/",
+  "display": "browser",
+  "theme_color": "#0c0c0c",
+  "background_color": "#0c0c0c",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

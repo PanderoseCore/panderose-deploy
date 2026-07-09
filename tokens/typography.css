@@ -1,0 +1,52 @@
+/* ============================================================
+   Panderose — Typography tokens
+   Neo-grotesque (Helvetica Neue) display + body, monospace
+   technical labels. Large, bold, tightly tracked.
+   ============================================================ */
+
+:root {
+  /* ── Families ───────────────────────────────────────────── */
+  --font-sans:  "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", Arial, sans-serif;
+  --font-mono:  "JetBrains Mono", "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-serif: "Times New Roman", Times, Georgia, serif;
+
+  /* ── Weights ────────────────────────────────────────────── */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+
+  /* ── Display scale (clamped, for hero / section heads) ──── */
+  --display-1: clamp(48px, 7vw, 96px);   /* @kind font */ /* hero */
+  --display-2: clamp(40px, 5.4vw, 72px); /* @kind font */ /* section opener */
+  --display-3: clamp(32px, 4vw, 52px);   /* @kind font */ /* tile / sub */
+
+  /* ── Heading scale ──────────────────────────────────────── */
+  --heading-1: 34px;
+  --heading-2: 26px;
+  --heading-3: 20px;
+  --heading-4: 17px;
+
+  /* ── Body scale ─────────────────────────────────────────── */
+  --text-lede:  clamp(18px, 1.8vw, 22px);  /* deck under a hero */
+  --text-lg:    18px;
+  --text-base:  16px;
+  --text-sm:    14px;
+  --text-xs:    13px;
+
+  /* ── Mono label scale ───────────────────────────────────── */
+  --label:    11.5px;   /* eyebrows / kickers, uppercase */
+  --label-sm: 10.5px;
+
+  /* ── Tracking ───────────────────────────────────────────── */
+  --track-display: -0.035em;  /* big type, tight */
+  --track-heading: -0.022em;
+  --track-body:    -0.006em;
+  --track-label:   0.08em;    /* mono, uppercase, open */
+
+  /* ── Leading ────────────────────────────────────────────── */
+  --leading-display: 1.0;
+  --leading-heading: 1.1;
+  --leading-body:    1.5;
+  --leading-relaxed: 1.65;
+}

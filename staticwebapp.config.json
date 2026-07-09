@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+  "trailingSlash": "never",
+  "routes": [
+    { "route": "/about",        "rewrite": "/about.html" },
+    { "route": "/capabilities", "rewrite": "/capabilities.html" },
+    { "route": "/compliance",   "rewrite": "/compliance.html" },
+    { "route": "/contact",      "rewrite": "/contact.html" },
+    { "route": "/news",         "rewrite": "/news.html" },
+    { "route": "/privacy",      "rewrite": "/privacy.html" },
+    { "route": "/security",     "rewrite": "/security.html" },
+    { "route": "/terms",        "rewrite": "/terms.html" },
+    { "route": "/assets/*", "headers": { "Cache-Control": "public, max-age=86400" } },
+    { "route": "/tokens/*", "headers": { "Cache-Control": "public, max-age=86400" } }
+  ],
+  "responseOverrides": {
+    "404": { "rewrite": "/404.html", "statusCode": 404 }
+  },
+  "mimeTypes": {
+    ".webmanifest": "application/manifest+json",
+    ".svg": "image/svg+xml",
+    ".ico": "image/x-icon",
+    ".json": "application/json"
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload"
+  }
+}

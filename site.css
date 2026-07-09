@@ -1,0 +1,497 @@
+/* ============================================================
+   panderose.com — page layout
+   Consumes the Panderose design tokens (styles.css). Does NOT
+   override any token. Dark, minimal, typographic. No icons,
+   no decoration, no list bullets, no separators.
+   ============================================================ */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-canvas);
+}
+
+/* ── Nav ────────────────────────────────────────────────────── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 10, 12, 0.72);
+  backdrop-filter: var(--blur-nav);
+  -webkit-backdrop-filter: var(--blur-nav);
+  border-bottom: 1px solid var(--border-hair);
+}
+.nav__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 18px;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+.brand img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  display: block;
+}
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  font-size: 14.5px;
+  letter-spacing: -0.006em;
+}
+.nav__links a {
+  color: var(--text-body);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.nav__links a:hover { color: var(--text-strong); }
+
+/* ── Main / content frame ───────────────────────────────────── */
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(80px, 14vw, 200px) var(--gutter) clamp(72px, 12vw, 168px);
+}
+.measure { max-width: 18ch; }
+.measure--wide { max-width: 30ch; }
+
+/* ── Type ───────────────────────────────────────────────────── */
+.headline {
+  margin: 0;
+  font-size: var(--display-1);
+  line-height: 0.98;
+  letter-spacing: var(--track-display);
+  font-weight: var(--weight-medium);
+  color: var(--text-strong);
+  text-wrap: balance;
+  max-width: 16ch;
+}
+.page-title {
+  margin: 0;
+  font-size: var(--display-2);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  font-weight: var(--weight-medium);
+  color: var(--text-strong);
+}
+.body {
+  margin: var(--space-6) 0 0;
+  font-size: var(--text-lede);
+  line-height: 1.45;
+  letter-spacing: -0.006em;
+  color: var(--text-body);
+  max-width: 52ch;
+}
+.body--prose {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  max-width: 58ch;
+}
+
+/* ── Section blocks (about / compliance) ────────────────────── */
+.block {
+  margin-top: clamp(56px, 8vw, 96px);
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--border-hair);
+}
+.block__title {
+  margin: 0 0 var(--space-5);
+  font-size: var(--heading-2);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 58ch;
+}
+.stack--tight { gap: var(--space-2); }
+.line {
+  margin: 0;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  letter-spacing: -0.006em;
+  color: var(--text-body);
+}
+.line strong {
+  color: var(--text-strong);
+  font-weight: var(--weight-medium);
+}
+.line--prose { max-width: 58ch; }
+
+/* ── What we build (name + description grid) ─────────────────── */
+.builds {
+  margin-top: var(--space-3);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-7) var(--space-7);
+  max-width: 64ch;
+}
+.build {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: inherit;
+}
+.build__name {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+}
+.build__desc {
+  margin: 0;
+  font-size: var(--text-base, 15px);
+  line-height: 1.5;
+  letter-spacing: -0.004em;
+  color: var(--text-muted);
+  max-width: 34ch;
+}
+
+/* ── Team (about) ─────────────────────────────────────────── */
+.team {
+  margin-top: var(--space-6);
+}
+.team__founders {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-7);
+}
+.team__sep {
+  border: 0;
+  border-top: 1px solid var(--border-hair);
+  margin: var(--space-7) auto;
+  width: 600px;
+  max-width: 100%;
+}
+.team__open {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-6) var(--space-7);
+}
+.member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  width: min(276px, 100%);
+}
+.member--team {
+  width: min(180px, 100%);
+  gap: var(--space-3);
+}
+.member__photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius-md);
+  display: block;
+  background: var(--surface-card);
+}
+.member__photo--top { object-position: top; }
+.member__photo--empty {
+  border: 1px solid var(--border-hair);
+}
+.member__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1 1 auto;
+}
+.member__name {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  line-height: 1.35;
+  letter-spacing: -0.008em;
+  color: var(--text-strong);
+}
+.member__role {
+  margin: 0;
+  font-size: var(--text-base, 15px);
+  line-height: 1.4;
+  letter-spacing: -0.004em;
+  color: var(--text-body);
+}
+.member__edu {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: -0.004em;
+  color: var(--text-muted);
+}
+.member--team .member__name { font-size: var(--text-base, 15px); }
+.member--team .member__role { font-size: 13px; }
+.member--team .member__edu { font-size: 12px; }
+.member__email {
+  padding-top: var(--space-1);
+  font-size: 14px;
+  letter-spacing: -0.004em;
+  color: var(--accent-text);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.member__email:hover { color: var(--text-strong); }
+
+/* ── Contact section email ────────────────────────────────── */
+.block__email {
+  display: inline-block;
+  margin-top: var(--space-5);
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.02em;
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.block__email:hover { color: var(--text-strong); }
+
+/* ── Contact block (about page) ───────────────────────────── */
+.contacts {
+  margin-top: var(--space-4);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6) var(--space-7);
+  max-width: 60ch;
+}
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.contact__label {
+  margin: 0;
+  font-size: var(--text-base, 15px);
+  letter-spacing: -0.004em;
+  color: var(--text-muted);
+}
+.contact__email {
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.018em;
+  color: var(--accent-text);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.contact__email:hover { color: var(--text-strong); }
+
+/* ── Email (contact) ────────────────────────────────────────── */
+.email {
+  display: inline-block;
+  margin-top: var(--space-7);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.03em;
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.email:hover { color: var(--text-strong); }
+.email-meta {
+  margin: var(--space-5) 0 0;
+  font-size: var(--text-lg);
+  letter-spacing: -0.006em;
+  color: var(--text-muted);
+}
+
+/* ── Inline contact note (privacy / security pages) ─────────── */
+.contact-note {
+  margin: var(--space-7) 0 0;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  letter-spacing: -0.006em;
+  color: var(--text-muted);
+}
+.contact-note a {
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.contact-note a:hover { color: var(--text-strong); }
+
+/* ── Definition lists (compliance / legal) ──────────── */
+.defs {
+  margin: 0;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-3) var(--space-7);
+  max-width: 66ch;
+}
+.defs dt {
+  margin: 0;
+  font-size: var(--text-base, 15px);
+  letter-spacing: -0.004em;
+  color: var(--text-muted);
+}
+.defs dd {
+  margin: 0;
+  font-size: var(--text-base, 15px);
+  line-height: 1.55;
+  letter-spacing: -0.004em;
+  color: var(--text-body);
+}
+.defs a {
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.defs a:hover { color: var(--text-strong); }
+.dateline {
+  margin: var(--space-5) 0 0;
+  font-size: var(--text-base, 15px);
+  letter-spacing: -0.004em;
+  color: var(--text-muted);
+}
+.line a {
+  color: var(--accent-text);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.line a:hover { color: var(--text-strong); }
+.block[id] { scroll-margin-top: 96px; }
+.email-meta--prose {
+  max-width: 56ch;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+/* ── Primary CTA (one per page) ─────────────────────────────── */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--space-7);
+  padding: 15px 28px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.cta:hover { background: var(--accent-hover); }
+.cta:active { background: var(--accent-press); }
+
+/* ── Footer (four columns) ──────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border-hair);
+  background: var(--surface-canvas);
+}
+.footer__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--gutter);
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  gap: var(--space-6);
+}
+.footer__brand .brand { font-size: 18px; }
+.footer__tag {
+  margin: var(--space-4) 0 0;
+  max-width: 30ch;
+  font-size: 13.5px;
+  line-height: 1.55;
+  letter-spacing: -0.004em;
+  color: var(--text-muted);
+}
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.footer__h {
+  margin: 0 0 var(--space-1);
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.005em;
+  color: var(--text-body);
+}
+.footer__col a {
+  font-size: 13.5px;
+  letter-spacing: -0.004em;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.footer__col a:hover { color: var(--text-strong); }
+.footer__muted {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13.5px;
+  letter-spacing: -0.004em;
+  color: var(--text-faint);
+}
+.footer__note {
+  font-size: 11.5px;
+  letter-spacing: 0;
+  color: var(--text-faint);
+  opacity: 0.75;
+}
+.footer__legal {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--gutter);
+  border-top: 1px solid var(--border-hair);
+  font-size: 13px;
+  letter-spacing: -0.004em;
+  color: var(--text-faint);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  :root { --gutter: 22px; }
+  .nav__links { gap: var(--space-4); font-size: 13.5px; }
+  .nav__inner { gap: var(--space-3); }
+  .footer__inner { grid-template-columns: 1fr 1fr; gap: var(--space-6) var(--space-5); }
+  .footer__brand { grid-column: 1 / -1; }
+  .builds { grid-template-columns: 1fr; gap: var(--space-6); }
+  .contacts { grid-template-columns: 1fr; gap: var(--space-6); }
+  .team__sep { width: 100%; }
+  .defs { grid-template-columns: 1fr; gap: var(--space-1); }
+  .defs dt { margin-top: var(--space-4); }
+  .defs dt:first-of-type { margin-top: 0; }
+}
+
+/* Plus icon for open team positions */
+.member__photo--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.member__plus {
+  font-size: 40px;
+  font-weight: 200;
+  line-height: 1;
+  color: var(--text-muted, #8a8a8a);
+  user-select: none;
+}

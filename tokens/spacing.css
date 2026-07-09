@@ -1,0 +1,40 @@
+/* ============================================================
+   Panderose — Spacing, layout & radius tokens
+   8px base grid. Generous negative space is part of the brand.
+   ============================================================ */
+
+:root {
+  /* ── Spacing scale (8px base) ───────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+  --space-11: 160px;
+
+  /* ── Section rhythm ─────────────────────────────────────── */
+  --section-pad-y: clamp(64px, 10vw, 160px);
+  --block-gap:     12px;   /* the tight gutter between stacked tiles */
+
+  /* ── Layout widths ──────────────────────────────────────── */
+  --max:      1320px;   /* wide container */
+  --max-prose: 760px;   /* reading measure */
+  --max-tile: 1200px;   /* tile / card column */
+  --gutter:   40px;
+
+  /* ── Radius ─────────────────────────────────────────────── */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;   /* default card */
+  --radius-xl:   22px;
+  --radius-pill: 999px;  /* buttons, chips, tags */
+
+  /* ── Border widths ──────────────────────────────────────── */
+  --border-1: 1px;
+  --border-2: 1.5px;
+}
