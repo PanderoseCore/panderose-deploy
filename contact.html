@@ -1,4 +1,4 @@
-<!-- @dsCard group="Panderose.com" viewport="1320x720" name="Contact" subtitle="Contact and teaming" -->
+<!-- @dsCard group="Panderose.com" viewport="1320x1600" name="Contact" subtitle="Contact and teaming" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260702" />
+<link rel="stylesheet" href="/site.css?v=20260836" />
 </head>
 <body>
 <div class="page">
@@ -24,8 +24,9 @@
         <span>Panderose</span>
       </a>
       <div class="nav__links">
+        <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
       </div>
@@ -38,15 +39,87 @@
 
     <section class="block" id="contact">
       <h2 class="block__title">Get in touch</h2>
-      <a class="block__email" href="mailto:contact@panderose.com">contact@panderose.com</a>
+      <p class="line line--prose">Tell us what you're reaching out about and we'll route it to the right person, or write to us directly at <a href="mailto:contact@panderose.com">contact@panderose.com</a>.</p>
+
+      <form class="form" action="mailto:contact@panderose.com" method="post" id="contact-form">
+        <div class="form-row">
+          <label class="field">
+            <span class="field__label">Name</span>
+            <input class="pan-field" type="text" name="name" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span class="field__label">Email</span>
+            <input class="pan-field" type="email" name="email" autocomplete="email" required />
+          </label>
+        </div>
+        <div class="form-row">
+          <label class="field">
+            <span class="field__label">Inquiry type</span>
+            <select class="pan-field" name="inquiry_type" id="inquiry-type">
+              <option value="general">General</option>
+              <option value="investment">Investment</option>
+              <option value="enterprise">Enterprise &amp; government</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field__label" id="org-label">Organization (optional)</span>
+            <input class="pan-field" type="text" name="organization" id="org-field" autocomplete="organization" />
+          </label>
+        </div>
+        <label class="field">
+          <span class="field__label">Message</span>
+          <textarea class="pan-field" name="message" id="message-field" placeholder="What you'd like to know, and any relevant background." required></textarea>
+        </label>
+        <button class="cta" type="submit" id="submit-btn">Send message</button>
+      </form>
+
       <p class="email-meta email-meta--prose">Teaming opportunities welcome. We are open to subcontracting arrangements with prime contractors pursuing federal awards.</p>
     </section>
 
     <section class="block">
       <h2 class="block__title">Security inquiries</h2>
-      <p class="line line--prose">For security-related matters, see our <a href="/security">security posture</a> or reach us at the address above.</p>
+      <p class="line line--prose">For security-related matters, see our <a href="/security">security posture</a> or reach us at the address above. Do not submit vulnerability reports through the form above.</p>
     </section>
   </main>
+
+  <script>
+    (function () {
+      var select = document.getElementById('inquiry-type');
+      var orgLabel = document.getElementById('org-label');
+      var orgField = document.getElementById('org-field');
+      var message = document.getElementById('message-field');
+      var submit = document.getElementById('submit-btn');
+      var copy = {
+        general: {
+          org: 'Organization (optional)',
+          required: false,
+          placeholder: 'What you\'d like to know, and any relevant background.',
+          submit: 'Send message'
+        },
+        investment: {
+          org: 'Firm / fund (optional)',
+          required: false,
+          placeholder: 'What you\'d like to know about Clerid\'s funding path or the broader Panderose opportunity.',
+          submit: 'Send to investor relations'
+        },
+        enterprise: {
+          org: 'Organization',
+          required: true,
+          placeholder: 'Your program or use case, and what you\'re looking to solve.',
+          submit: 'Request a walkthrough'
+        }
+      };
+      function apply() {
+        var c = copy[select.value] || copy.general;
+        orgLabel.textContent = c.org;
+        orgField.required = c.required;
+        message.placeholder = c.placeholder;
+        submit.textContent = c.submit;
+      }
+      select.addEventListener('change', apply);
+      apply();
+    })();
+  </script>
 
   <footer class="footer">
     <div class="footer__inner">
@@ -60,9 +133,11 @@
       <nav class="footer__col" aria-label="Company">
         <h3 class="footer__h">Company</h3>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/clerid">Clerid</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
+        <a href="/news">News</a>
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>

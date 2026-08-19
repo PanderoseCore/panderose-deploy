@@ -1,4 +1,4 @@
-﻿<!-- @dsCard group="Panderose.com" viewport="1320x820" name="Home" subtitle="Tagline, positioning, one CTA" -->
+<!-- @dsCard group="Panderose.com" viewport="1320x820" name="Home" subtitle="Hero, Clerid flagship, focus areas" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260702" />
+<link rel="stylesheet" href="/site.css?v=20260836" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -27,7 +27,7 @@
   "alternateName": "Panderose",
   "url": "https://panderose.com",
   "logo": "https://panderose.com/assets/logo.png",
-  "description": "Defense software company building federal procurement analytics, defense supply chain software, compliance automation, and federal data systems. Active DoD SBIR participant. Prescott, AZ.",
+  "description": "Defense software company building Clerid, a records intelligence platform that turns unstructured government and business records into structured, reviewable data, alongside federal procurement analytics, supply chain intelligence, research automation, and data sovereignty tooling. Active DoD SBIR participant. Prescott, AZ.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Prescott",
@@ -44,7 +44,7 @@
     { "@type": "Person", "name": "Hayden Fay", "jobTitle": "Co-Founder and CEO" },
     { "@type": "Person", "name": "Johnathan Hockersmith", "jobTitle": "Co-Founder and CTO" }
   ],
-  "knowsAbout": ["Federal procurement analytics", "Defense supply chain software", "Compliance automation", "CMMC", "NIST SP 800-171"],
+  "knowsAbout": ["Audit preparedness automation", "Federal procurement analytics", "Supply chain intelligence", "Research automation", "Data sovereignty", "CMMC", "NIST SP 800-171"],
   "sameAs": [
     "https://www.linkedin.com/company/panderose"
   ]
@@ -61,49 +61,117 @@
         <span>Panderose</span>
       </a>
       <div class="nav__links">
+        <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
       </div>
     </div>
   </nav>
 
-  <main class="main">
-    <h1 class="headline">Building Intelligence Systems for Defense &amp; Private Enterprise</h1>
-    <p class="body">Panderose is a purpose-built software development firm that is built on compliance and agility.</p>
-    <a class="cta" href="/contact">Get in touch</a>
+  <main class="main main--home">
 
-    <section class="block">
-      <p class="line line--prose">Defense and government programs run on problems most software teams have never had to solve. Panderose builds for that reality, treating compliance, data sovereignty, performance, and reliability as equal requirements from day one.</p>
+    <section class="hero">
+      <img class="hero__slide" src="/assets/home/hero-1.jpg?v=20260816" alt="" />
+      <img class="hero__slide" src="/assets/home/hero-2.jpg?v=20260816" alt="" />
+      <img class="hero__slide" src="/assets/home/hero-3.jpg?v=20260816" alt="" />
+      <div class="hero__scrim"></div>
+      <div class="hero__inner">
+        <div class="hero__brand">
+          <img src="/assets/logo.png" alt="" />
+          <span>Panderose</span>
+        </div>
+        <div class="hero__divider"></div>
+        <div class="hero__text">
+          <h1 class="headline">Building Intelligence Systems for Defense &amp; Private Enterprise</h1>
+          <a class="cta" href="/contact">Get in touch</a>
+        </div>
+      </div>
+      <span class="hero__credit">DVIDS, public domain</span>
     </section>
 
+    <div class="story">
+
+      <section class="story__row" aria-labelledby="story-clerid">
+        <div class="story__media">
+          <img src="/assets/home/clerid.jpg?v=20260816" alt="" style="object-position: center 35%;" />
+        </div>
+        <div class="story__scrim"></div>
+        <div class="story__copy">
+          <h2 class="story__title" id="story-clerid">Clerid</h2>
+          <p class="story__desc">Turns unstructured government and business records into structured, reviewable data. Currently in active development for the Defense Logistics Agency.</p>
+          <a class="story__link" href="/clerid">View Clerid &rarr;</a>
+        </div>
+      </section>
+
+      <section class="story__row story__row--alt" aria-labelledby="story-procurement">
+        <div class="story__media">
+          <img class="reveal-fade" src="/assets/home/focus-procurement.jpg?v=20260816" alt="" />
+          <img src="/assets/home/focus-procurement.jpg?v=20260816" alt="" />
+        </div>
+        <div class="story__scrim"></div>
+        <div class="story__copy">
+          <h2 class="story__title" id="story-procurement">Federal Procurement Analytics</h2>
+          <p class="story__desc">World class analysis of federal procurement data for compliance and oversight.</p>
+          <a class="story__link" href="/company#procurement-analytics">View focus area &rarr;</a>
+        </div>
+      </section>
+
+      <section class="story__row" aria-labelledby="story-supply-chain">
+        <div class="story__media">
+          <img src="/assets/home/focus-supply-chain.jpg?v=20260816" alt="" />
+        </div>
+        <div class="story__scrim"></div>
+        <div class="story__copy">
+          <h2 class="story__title" id="story-supply-chain">Supply Chain Intelligence</h2>
+          <p class="story__desc">Vendor and supplier visibility in logistics environments.</p>
+          <a class="story__link" href="/company#supply-chain">View focus area &rarr;</a>
+        </div>
+      </section>
+
+      <section class="story__row story__row--alt" aria-labelledby="story-research">
+        <div class="story__media">
+          <img class="is-color" src="/assets/home/focus-research.jpg?v=20260816" alt="" />
+        </div>
+        <div class="story__scrim"></div>
+        <div class="story__copy">
+          <h2 class="story__title" id="story-research">Research Automation</h2>
+          <p class="story__desc">Intelligent tooling that produces structured, verifiable records from heterogeneous data.</p>
+          <a class="story__link" href="/company#compliance-automation">Read more &rarr;</a>
+        </div>
+      </section>
+
+      <section class="story__row story__row--alt" aria-labelledby="story-sovereignty">
+        <div class="story__media">
+          <img src="/assets/home/focus-data-sovereignty.jpg?v=20260816" alt="" />
+        </div>
+        <div class="story__scrim"></div>
+        <div class="story__copy">
+          <h2 class="story__title" id="story-sovereignty">Data Sovereignty</h2>
+          <p class="story__desc">Mission-critical data custody guarding institutional assets and sensitive records within national borders.</p>
+          <a class="story__link" href="/company#federal-data-systems">Read more &rarr;</a>
+        </div>
+      </section>
+
+    </div>
+
     <section class="block">
-      <h2 class="block__title">What we're building</h2>
-      <div class="builds">
-        <a class="build" href="/capabilities#procurement-analytics">
-          <h3 class="build__name">Federal procurement analytics</h3>
-          <p class="build__desc">Analysis of government procurement and award data for compliance and oversight functions.</p>
+      <h2 class="block__title">News</h2>
+      <div class="news-list">
+        <a class="news-item" href="/news#security-posture">
+          <span class="news-item__date">Jun 2026</span>
         </a>
-        <a class="build" href="/capabilities#supply-chain">
-          <h3 class="build__name">Defense supply chain software</h3>
-          <p class="build__desc">Vendor and supplier visibility in defense logistics environments.</p>
+        <a class="news-item" href="/news#sbir">
+          <span class="news-item__date">May 2026</span>
         </a>
-        <a class="build" href="/capabilities#compliance-automation">
-          <h3 class="build__name">Compliance automation</h3>
-          <p class="build__desc">Tooling that produces structured, verifiable records for federal audit and oversight programs.</p>
-        </a>
-        <a class="build" href="/capabilities#federal-data-systems">
-          <h3 class="build__name">Federal data systems</h3>
-          <p class="build__desc">Pipelines that normalize and reason over complex, multi-source government data.</p>
+        <a class="news-item" href="/news#founded">
+          <span class="news-item__date">Apr 2026</span>
         </a>
       </div>
+      <a class="news-teaser__link" href="/news">View all news &rarr;</a>
     </section>
 
-    <section class="block">
-      <h2 class="block__title">Innovative focus</h2>
-      <p class="line line--prose">Panderose is developing compliance tooling and data systems for federal procurement through the DoD SBIR program, with an architecture built to scale across the 24 CFO Act agencies. It's the foundation for a growing pipeline of SBIR work as we expand into adjacent procurement and compliance problems across the federal space.</p>
-    </section>
   </main>
 
   <footer class="footer">
@@ -113,14 +181,16 @@
           <img src="/assets/logo.png" alt="Panderose" />
           <span>Panderose</span>
         </a>
-        <p class="footer__tag">Building Intelligence Systems for Defense & Private Enterprise</p>
+        <p class="footer__tag">Building Intelligence Systems for Defense &amp; Private Enterprise</p>
       </div>
       <nav class="footer__col" aria-label="Company">
         <h3 class="footer__h">Company</h3>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/clerid">Clerid</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
+        <a href="/news">News</a>
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>

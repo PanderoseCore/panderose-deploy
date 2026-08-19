@@ -3,7 +3,12 @@
   "trailingSlash": "never",
   "routes": [
     { "route": "/about",        "rewrite": "/about.html" },
-    { "route": "/capabilities", "rewrite": "/capabilities.html" },
+    { "route": "/clerid",       "rewrite": "/clerid.html" },
+    { "route": "/clerid-investors",  "rewrite": "/clerid-investors.html" },
+    { "route": "/clerid-enterprise", "rewrite": "/clerid-enterprise.html" },
+    { "route": "/company",      "rewrite": "/company.html" },
+    { "route": "/focus-areas",  "redirect": "/company", "statusCode": 301 },
+    { "route": "/capabilities", "redirect": "/company", "statusCode": 301 },
     { "route": "/compliance",   "rewrite": "/compliance.html" },
     { "route": "/contact",      "rewrite": "/contact.html" },
     { "route": "/news",         "rewrite": "/news.html" },
