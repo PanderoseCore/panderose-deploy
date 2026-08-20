@@ -17,7 +17,7 @@
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260836" />
+<link rel="stylesheet" href="/site.css?v=20260838" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -60,7 +60,12 @@
         <img src="/assets/logo.png" alt="Panderose" />
         <span>Panderose</span>
       </a>
-      <div class="nav__links">
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <div class="nav__links" id="nav-links">
         <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
         <a href="/company">Company</a>
@@ -194,7 +199,7 @@
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>
-        <a href="/security">Security</a>
+        <a href="/compliance#security">Security</a>
         <span class="footer__muted">Capabilities Statement<span class="footer__note">In preparation</span></span>
       </nav>
       <nav class="footer__col" aria-label="Legal">
@@ -212,5 +217,6 @@
   </footer>
 
 </div>
+<script src="/assets/nav.js?v=20260819"></script>
 </body>
 </html>

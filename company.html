@@ -12,11 +12,12 @@
 <meta property="og:title" content="Company | Panderose" />
 <meta property="og:description" content="Panderose leadership, and the capabilities we build: federal procurement analytics, supply chain intelligence, research automation, and data sovereignty." />
 <meta property="og:url" content="https://panderose.com/company" />
+<meta property="og:image" content="https://panderose.com/assets/og-panderose.png" />
 <meta name="theme-color" content="#0c0c0c" />
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260836" />
+<link rel="stylesheet" href="/site.css?v=20260838" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -66,7 +67,12 @@
         <img src="/assets/logo.png" alt="Panderose" />
         <span>Panderose</span>
       </a>
-      <div class="nav__links">
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <div class="nav__links" id="nav-links">
         <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
         <a href="/company">Company</a>
@@ -88,7 +94,7 @@
 
   <main class="main">
     <h1 class="page-title">Company</h1>
-    <p class="body body--prose">Panderose is a defense software company built and run by its founders out of Prescott, Arizona, developing Clerid and the capabilities below for federal procurement, defense logistics, and compliance.</p>
+    <p class="body body--prose">Panderose is a records intelligence software company built and run by its founders out of Prescott, Arizona, developing Clerid and the capabilities below for federal procurement, defense logistics, and enterprise compliance.</p>
 
     <section class="block" id="leadership">
       <h2 class="block__title">Leadership</h2>
@@ -100,7 +106,7 @@
               <p class="member__name">Hayden Fay</p>
               <p class="member__role">Co-Founder and CEO</p>
               <div class="member__bio">
-                <p class="member__edu">Runs Panderose's finances, operations, and commercialization strategy, and led the company's SBIR engagement with the Defense Logistics Agency from first contact through proposal. B.S. Global Business and Supply Chain Management, Embry-Riddle Aeronautical University.</p>
+                <p class="member__edu">Runs Panderose's finances, operations, and commercialization strategy, and led the company's SBIR engagement with the Defense Logistics Agency from first contact through proposal. B.S. Global Business and Supply Chain Management, Embry-Riddle Aeronautical University (expected 2030).</p>
               </div>
             </div>
           </div>
@@ -110,7 +116,7 @@
               <p class="member__name">Johnathan Hockersmith</p>
               <p class="member__role">Co-Founder and CTO</p>
               <div class="member__bio">
-                <p class="member__edu">Principal architect of Clerid, from entity resolution to the audit trail behind every result. Built large-scale government data aggregation systems before Panderose, and serves as Experiment Lead for NASA's EagleSat-3 mission under a NASA Ignite research fellowship. B.S. Cyber Intelligence and Security, Embry-Riddle Aeronautical University.</p>
+                <p class="member__edu">Principal architect of Clerid, from entity resolution to the audit trail behind every result. Built large-scale government data aggregation systems before Panderose, and serves as Experiment Lead for NASA's EagleSat-3 mission under a NASA Ignite research fellowship. B.S. Cyber Intelligence and Security, Embry-Riddle Aeronautical University (expected 2029).</p>
               </div>
             </div>
           </div>
@@ -120,7 +126,7 @@
 
     <section class="section-transition" id="capabilities">
       <h2 class="section-transition__title">Capabilities</h2>
-      <p class="section-transition__desc">Panderose builds across four related capabilities in federal procurement, defense logistics, and compliance. Each is purpose-built for government data, not adapted from commercial tooling.</p>
+      <p class="section-transition__desc">Panderose builds across four related capabilities in federal procurement, defense logistics, and compliance. Each one is purpose-built from the ground up for the complexity of government and enterprise data.</p>
     </section>
 
     <section class="block" id="procurement-analytics">
@@ -129,7 +135,7 @@
       <ul class="line line--prose">
         <li>Contract spend and obligation tracking across federal award data sources</li>
         <li>Vendor and contractor risk signals derived from award history</li>
-        <li>Structured outputs designed for audit and oversight review, not just dashboards</li>
+        <li>Structured outputs built for audit and oversight review</li>
       </ul>
     </section>
 
@@ -139,7 +145,7 @@
       <ul class="line line--prose">
         <li>Vendor and sub-tier supplier mapping for defense logistics programs and commercial supply chains alike</li>
         <li>Disruption and single-source risk flagging</li>
-        <li>Designed to integrate with existing program or procurement data, not replace it</li>
+        <li>Designed to integrate directly with existing program or procurement data</li>
       </ul>
     </section>
 
@@ -151,7 +157,7 @@
         <li>Controls aligned to NIST SP 800-171 and CMMC Level 2 practices</li>
         <li>Built for unclassified government and enterprise workloads on infrastructure Panderose owns and operates</li>
       </ul>
-      <p class="line line--prose"><a href="/security">See our security and compliance posture</a>.</p>
+      <p class="line line--prose"><a href="/compliance#security">See our security and compliance posture</a>.</p>
     </section>
 
     <section class="block" id="federal-data-systems">
@@ -191,7 +197,7 @@
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>
-        <a href="/security">Security</a>
+        <a href="/compliance#security">Security</a>
         <span class="footer__muted">Capabilities Statement<span class="footer__note">In preparation</span></span>
       </nav>
       <nav class="footer__col" aria-label="Legal">
@@ -210,5 +216,6 @@
 
 </div>
 <script src="/assets/globe.js?v=20260828"></script>
+<script src="/assets/nav.js?v=20260819"></script>
 </body>
 </html>

@@ -7,12 +7,17 @@
 <title>Contact | Panderose</title>
 <meta name="description" content="Contact Panderose for contracting inquiries, partnerships, or general information. Prescott, AZ." />
 <meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Contact | Panderose" />
+<meta property="og:description" content="Contact Panderose for contracting inquiries, partnerships, or general information. Prescott, AZ." />
+<meta property="og:url" content="https://panderose.com/contact" />
+<meta property="og:image" content="https://panderose.com/assets/og-panderose.png" />
 <link rel="canonical" href="https://panderose.com/contact" />
 <meta name="theme-color" content="#0c0c0c" />
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260836" />
+<link rel="stylesheet" href="/site.css?v=20260838" />
 </head>
 <body>
 <div class="page">
@@ -23,7 +28,12 @@
         <img src="/assets/logo.png" alt="Panderose" />
         <span>Panderose</span>
       </a>
-      <div class="nav__links">
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <div class="nav__links" id="nav-links">
         <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
         <a href="/company">Company</a>
@@ -71,6 +81,7 @@
           <textarea class="pan-field" name="message" id="message-field" placeholder="What you'd like to know, and any relevant background." required></textarea>
         </label>
         <button class="cta" type="submit" id="submit-btn">Send message</button>
+        <p class="line" id="form-status" role="status" aria-live="polite" style="min-height: 1.5em; margin-top: var(--space-3);"></p>
       </form>
 
       <p class="email-meta email-meta--prose">Teaming opportunities welcome. We are open to subcontracting arrangements with prime contractors pursuing federal awards.</p>
@@ -78,7 +89,7 @@
 
     <section class="block">
       <h2 class="block__title">Security inquiries</h2>
-      <p class="line line--prose">For security-related matters, see our <a href="/security">security posture</a> or reach us at the address above. Do not submit vulnerability reports through the form above.</p>
+      <p class="line line--prose">For security-related matters, see our <a href="/compliance#security">security posture</a> or reach us at the address above. Do not submit vulnerability reports through the form above.</p>
     </section>
   </main>
 
@@ -116,8 +127,47 @@
         message.placeholder = c.placeholder;
         submit.textContent = c.submit;
       }
+      var params = new URLSearchParams(window.location.search);
+      var requested = params.get('inquiry');
+      if (requested && copy[requested]) {
+        select.value = requested;
+      }
+
       select.addEventListener('change', apply);
       apply();
+
+      // The form has no server backend yet, so submission opens a
+      // pre-filled mailto: draft instead of a raw form POST (which
+      // browsers handle inconsistently for mailto: targets). Swap
+      // this handler out once a real form endpoint exists.
+      var form = document.getElementById('contact-form');
+      var status = document.getElementById('form-status');
+      var nameField = form.querySelector('input[name="name"]');
+      var emailField = form.querySelector('input[name="email"]');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+
+        var typeLabel = select.options[select.selectedIndex].text;
+        var subject = 'Panderose inquiry (' + typeLabel + ') from ' + nameField.value.trim();
+        var lines = [
+          'Name: ' + nameField.value.trim(),
+          'Email: ' + emailField.value.trim()
+        ];
+        if (orgField.value.trim()) {
+          lines.push(orgLabel.textContent.replace(' (optional)', '') + ': ' + orgField.value.trim());
+        }
+        lines.push('');
+        lines.push(message.value.trim());
+
+        var mailto = 'mailto:contact@panderose.com'
+          + '?subject=' + encodeURIComponent(subject)
+          + '&body=' + encodeURIComponent(lines.join('\n'));
+
+        status.textContent = 'Opening your email client with this message pre-filled. If nothing happens, email us directly at contact@panderose.com.';
+        window.location.href = mailto;
+      });
     })();
   </script>
 
@@ -141,7 +191,7 @@
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>
-        <a href="/security">Security</a>
+        <a href="/compliance#security">Security</a>
         <span class="footer__muted">Capabilities Statement<span class="footer__note">In preparation</span></span>
       </nav>
       <nav class="footer__col" aria-label="Legal">
@@ -159,5 +209,6 @@
   </footer>
 
 </div>
+<script src="/assets/nav.js?v=20260819"></script>
 </body>
 </html>

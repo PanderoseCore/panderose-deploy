@@ -7,12 +7,17 @@
 <title>Clerid for Investors | Panderose</title>
 <meta name="description" content="Clerid: market opportunity, traction, and funding path from SBIR Phase I to production deployment at federal agencies." />
 <meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Clerid for Investors | Panderose" />
+<meta property="og:description" content="Clerid: market opportunity, traction, and funding path from SBIR Phase I to production deployment at federal agencies." />
+<meta property="og:url" content="https://panderose.com/clerid-investors" />
+<meta property="og:image" content="https://panderose.com/assets/og-panderose.png" />
 <link rel="canonical" href="https://panderose.com/clerid-investors" />
 <meta name="theme-color" content="#0c0c0c" />
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260836" />
+<link rel="stylesheet" href="/site.css?v=20260838" />
 </head>
 <body>
 <div class="page">
@@ -23,7 +28,12 @@
         <img src="/assets/logo.png" alt="Panderose" />
         <span>Panderose</span>
       </a>
-      <div class="nav__links">
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <div class="nav__links" id="nav-links">
         <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
         <a href="/company">Company</a>
@@ -40,12 +50,12 @@
 
     <section class="block">
       <h2 class="block__title">The opportunity</h2>
-      <p class="line line--prose">DLA alone obligated $55.4 billion across 8,500+ suppliers in FY2025 with no systematic way to measure vendor concentration risk. The same gap exists, in some form, across every one of the 24 CFO Act agencies, each with its own supplier base, its own audit exposure, and the same missing capability. DoD has posted eight consecutive years of disclaimer of opinion on its financial statements, with 26 material weaknesses identified in FY2025 alone. Vendor economic dependency is a well-defined slice of that problem, not a hypothetical one.</p>
+      <p class="line line--prose">DLA alone obligated $55.4 billion across 8,500+ suppliers in FY2025 with no systematic way to measure vendor concentration risk. The same gap exists, in some form, across every one of the 24 CFO Act agencies, each with its own supplier base, its own audit exposure, and the same missing capability. DoD has posted eight consecutive years of disclaimer of opinion on its financial statements, with 26 material weaknesses identified in FY2025 alone. Vendor economic dependency is a well-defined, measurable slice of that problem.</p>
     </section>
 
     <section class="block">
       <h2 class="block__title">Traction</h2>
-      <p class="line line--prose">Clerid is not a concept. It's a working prototype (TRL 5), validated end-to-end against live external systems: SAM.gov, USASpending.gov, and SEC EDGAR. Tested against a real 32-vendor set, it successfully measured 28, with dependency ratios ranging from near-zero up to 9.37%. The unresolved cases were typed exceptions: a wrong-entity refusal, a privately-held vendor, two foreign entities without comparable filings, which is itself a useful signal about where the method's boundaries are.</p>
+      <p class="line line--prose">Clerid is not a concept. It's a working prototype (TRL 5), validated end-to-end against live external systems: SAM.gov, USASpending.gov, and SEC EDGAR, with a sourced evidence trail behind every result. The same engine already runs three ways: screening a vendor base for economic dependency risk, extracting capital projects from unstructured budget documents, and tracking contract actions buried in meeting minutes. Adding a fourth domain is just a configuration change, and that reusability is itself part of the traction: the hard part was building the engine, and that work is already done.</p>
     </section>
 
     <section class="block">
@@ -55,7 +65,7 @@
 
     <section class="block">
       <h2 class="block__title">Path to market</h2>
-      <p class="line line--prose">The roadmap is sequential and deliberately narrow at first: prove the mechanism at DLA, extend to a second federal agency, then open a commercial track for private-sector compliance and internal-audit use cases that share the same underlying problem: knowing which counterparties you're financially entangled with.</p>
+      <p class="line line--prose">The roadmap is sequential and deliberately narrow at first: prove the mechanism at DLA, extend to a second federal agency, then open a commercial track for private-sector compliance and internal-audit use cases that share the same underlying problem, whether that's counterparty risk, unstructured budget data, or contract actions buried in records no one has time to read by hand.</p>
     </section>
 
     <section class="block" id="contact">
@@ -85,7 +95,7 @@
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>
-        <a href="/security">Security</a>
+        <a href="/compliance#security">Security</a>
         <span class="footer__muted">Capabilities Statement<span class="footer__note">In preparation</span></span>
       </nav>
       <nav class="footer__col" aria-label="Legal">
@@ -103,5 +113,6 @@
   </footer>
 
 </div>
+<script src="/assets/nav.js?v=20260819"></script>
 </body>
 </html>

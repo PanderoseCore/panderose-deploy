@@ -12,11 +12,12 @@
 <meta property="og:title" content="Clerid | Panderose" />
 <meta property="og:description" content="Records intelligence software: unstructured documents in, structured and reviewable data out." />
 <meta property="og:url" content="https://panderose.com/clerid" />
+<meta property="og:image" content="https://panderose.com/assets/og-panderose.png" />
 <meta name="theme-color" content="#0c0c0c" />
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260836" />
+<link rel="stylesheet" href="/site.css?v=20260838" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,7 +39,12 @@
         <img src="/assets/logo.png" alt="Panderose" />
         <span>Panderose</span>
       </a>
-      <div class="nav__links">
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <div class="nav__links" id="nav-links">
         <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
         <a href="/company">Company</a>
@@ -50,7 +56,7 @@
 
   <main class="main">
     <h1 class="page-title">Clerid</h1>
-    <p class="body body--prose">Clerid turns unstructured records into data your team can actually use, built first for federal vendor oversight and now extending into commercial industries.</p>
+    <p class="body body--prose">Clerid turns unstructured records into structured, usable data, built first for federal vendor oversight and now extending into commercial industries.</p>
 
     <section class="block">
       <div class="program-grid">
@@ -61,8 +67,8 @@
         </div>
         <div class="program-grid__item">
           <h2 class="block__title">Clerid's solution</h2>
-          <p class="line line--prose">Clerid is one engine that does the same job no matter what you point it at: pull in a source document, extract the structured records inside it, classify what it finds, and flag what needs a person to look at it, with a sourced trail back to the original document every time.</p>
-          <p class="line line--prose" style="margin-top: var(--space-4);">That engine already runs three ways: screening a vendor base for economic dependency risk, pulling capital projects out of unstructured budget documents, and tracking contract actions buried in meeting minutes. Adding a new use case is a configuration, not a rebuild.</p>
+          <p class="line line--prose">Clerid is one engine that does the same job no matter what it's pointed at: pull in a source document, extract the structured records inside it, classify what it finds, and flag what needs a person to look at it, with a sourced trail back to the original document every time.</p>
+          <p class="line line--prose" style="margin-top: var(--space-4);">That engine already runs three ways: screening a vendor base for economic dependency risk, pulling capital projects out of unstructured budget documents, and tracking contract actions buried in meeting minutes. Adding a new use case is just a configuration change.</p>
         </div>
       </div>
     </section>
@@ -79,7 +85,7 @@
 
       <div class="claim">
         <div class="claim__text">
-          <h2 class="claim__title">Nothing leaves your machine</h2>
+          <h2 class="claim__title">Everything stays local</h2>
           <p class="claim__sentence">Every run happens locally. Nothing is uploaded anywhere, by design.</p>
         </div>
         <!-- Replace with your own screenshot/video -->
@@ -99,7 +105,7 @@
     <section class="block">
       <h2 class="block__title">Two ways to look at Clerid</h2>
       <div class="split">
-        <a class="split__card split__card--link" href="/clerid-investors">
+        <a class="split__card split__card--link" href="/contact?inquiry=investment#contact">
           <p class="split__name">For Investors</p>
           <p class="split__desc">Market size, traction, and the funding path, from SBIR Phase I to production.</p>
           <span class="split__arrow">View &rarr;</span>
@@ -139,7 +145,7 @@
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>
-        <a href="/security">Security</a>
+        <a href="/compliance#security">Security</a>
         <span class="footer__muted">Capabilities Statement<span class="footer__note">In preparation</span></span>
       </nav>
       <nav class="footer__col" aria-label="Legal">
@@ -157,5 +163,6 @@
   </footer>
 
 </div>
+<script src="/assets/nav.js?v=20260819"></script>
 </body>
 </html>

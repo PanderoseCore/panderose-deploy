@@ -7,12 +7,17 @@
 <title>Privacy Policy | Panderose</title>
 <meta name="description" content="Privacy policy for panderose.com. Panderose does not sell or share contact information." />
 <meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Privacy Policy | Panderose" />
+<meta property="og:description" content="Privacy policy for panderose.com. Panderose does not sell or share contact information." />
+<meta property="og:url" content="https://panderose.com/privacy" />
+<meta property="og:image" content="https://panderose.com/assets/og-panderose.png" />
 <link rel="canonical" href="https://panderose.com/privacy" />
 <meta name="theme-color" content="#0c0c0c" />
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260836" />
+<link rel="stylesheet" href="/site.css?v=20260838" />
 </head>
 <body>
 <div class="page">
@@ -23,7 +28,12 @@
         <img src="/assets/logo.png" alt="Panderose" />
         <span>Panderose</span>
       </a>
-      <div class="nav__links">
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <div class="nav__links" id="nav-links">
         <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
         <a href="/company">Company</a>
@@ -40,11 +50,21 @@
     <section class="block">
       <dl class="defs">
         <dt>What we collect</dt>
-        <dd>Contact information submitted through the site.</dd>
+        <dd>Contact information you submit through the site: name, email, and anything you write in a message field. The contact form opens a pre-filled email to us; we don't run it through a server or database of our own.</dd>
+        <dt>Cookies and tracking</dt>
+        <dd>None. This site does not use cookies, analytics, or third-party tracking scripts of any kind.</dd>
         <dt>How we use it</dt>
-        <dd>To respond to inquiries and fulfill contracted services.</dd>
+        <dd>To respond to inquiries and fulfill contracted services. Nothing you submit is used for marketing outreach beyond replying to what you sent us.</dd>
         <dt>Third parties</dt>
-        <dd>We do not sell or share personal data.</dd>
+        <dd>We do not sell or share personal data. Information you provide is not shared outside Panderose except where required by law or a signed agreement.</dd>
+        <dt>Data retention</dt>
+        <dd>We keep inquiry correspondence as long as it's relevant to an active conversation or engagement, and delete or archive it when it's not.</dd>
+        <dt>Your rights</dt>
+        <dd>You can ask us what information we hold about you, or ask us to correct or delete it, at any time. Contact us and we'll respond.</dd>
+        <dt>Children's privacy</dt>
+        <dd>This site is not directed at children, and we do not knowingly collect information from anyone under 13.</dd>
+        <dt>Changes to this policy</dt>
+        <dd>If this policy changes materially, we'll update the effective date above.</dd>
         <dt>Contact</dt>
         <dd><a href="mailto:contact@panderose.com">contact@panderose.com</a></dd>
       </dl>
@@ -71,7 +91,7 @@
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>
-        <a href="/security">Security</a>
+        <a href="/compliance#security">Security</a>
         <span class="footer__muted">Capabilities Statement<span class="footer__note">In preparation</span></span>
       </nav>
       <nav class="footer__col" aria-label="Legal">
@@ -89,5 +109,6 @@
   </footer>
 
 </div>
+<script src="/assets/nav.js?v=20260819"></script>
 </body>
 </html>

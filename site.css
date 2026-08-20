@@ -107,6 +107,59 @@
 }
 .nav__links a:hover { color: var(--text-strong); }
 
+/* ── Mobile nav (hamburger) ───────────────────────────────────
+   Below 860px, five nav links no longer fit beside the wordmark.
+   .nav__toggle + JS (nav.js) swap the inline links for a dropdown. */
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.nav__toggle-bar {
+  display: block;
+  height: 2px;
+  width: 20px;
+  background: var(--text-strong);
+  transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+.nav--open .nav__toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav--open .nav__toggle-bar:nth-child(2) { opacity: 0; }
+.nav--open .nav__toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+  .nav__toggle { display: flex; }
+  .nav__inner { position: relative; }
+  .nav__links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: rgba(10, 10, 12, 0.98);
+    backdrop-filter: var(--blur-nav);
+    -webkit-backdrop-filter: var(--blur-nav);
+    border-bottom: 1px solid var(--border-hair);
+  }
+  .nav--open .nav__links { display: flex; }
+  .nav__links a {
+    padding: 16px var(--gutter);
+    border-top: 1px solid var(--border-hair);
+    font-size: 16px;
+  }
+}
+
 /* ── Main / content frame ───────────────────────────────────── */
 .main {
   flex: 1;
@@ -950,13 +1003,21 @@
   object-fit: cover;
 }
 .claim__media--placeholder {
+  position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed var(--border-strong);
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: var(--space-4);
+  box-sizing: border-box;
+  border: 1px solid var(--border-hair);
+  background-color: var(--surface-card);
+  background-image:
+    radial-gradient(480px 260px at 26% 18%, rgba(0, 102, 179, 0.10), transparent 60%),
+    repeating-linear-gradient(90deg, var(--border-hair) 0, var(--border-hair) 1px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(0deg, var(--border-hair) 0, var(--border-hair) 1px, transparent 1px, transparent 40px);
   color: var(--text-faint);
   font-family: var(--font-mono);
-  font-size: var(--label);
+  font-size: var(--label-sm);
   letter-spacing: var(--track-label);
   text-transform: uppercase;
 }
