@@ -35,6 +35,13 @@
   background-size: 100% 100%, 120px 100%, 100% 120px;
 }
 
+/* Clerid: soft brand glow, no grid lines */
+.page--glow {
+  background-color: var(--surface-canvas);
+  background-image: radial-gradient(1100px 560px at 50% -8%, rgba(0, 102, 179, 0.12), transparent 62%);
+  background-repeat: no-repeat;
+}
+
 /* About page: larger section titles + prose */
 .page--about .block__title {
   font-size: var(--heading-1);
@@ -221,6 +228,17 @@
   letter-spacing: -0.02em;
   color: var(--text-strong);
 }
+.block__title--lg { font-size: var(--display-3); }
+.concept-section-title { text-align: center; }
+.concept-tan-panel {
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background: #708090;
+  flex: 1;
+}
+.concept-tan-panel .line--prose { max-width: none; color: #3b2a1a; }
+.concept-tan-panel .line + .line { margin-top: var(--space-4); }
 .stack {
   display: flex;
   flex-direction: column;
@@ -960,10 +978,158 @@
 .program-grid__item {
   padding-top: var(--space-7);
   border-top: 1px solid var(--border-hair);
+  display: flex;
+  flex-direction: column;
 }
+/* Solid-fill reading surface: keeps paragraph text legible when the
+   page behind it carries a texture (e.g. Clerid's blueprint grid). */
+.text-panel {
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  background: var(--surface-card);
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-md);
+  flex: 1;
+}
+.text-panel .line--prose { max-width: none; }
+.text-panel .line + .line { margin-top: var(--space-4); }
 @media (max-width: 640px) {
   .program-grid { grid-template-columns: 1fr; gap: var(--space-6); }
 }
+
+/* ── Clerid hero (rounded, rotating-photo panel, centered content) ───── */
+.clerid-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-hair);
+  min-height: 560px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.clerid-hero__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  opacity: 0;
+  animation: heroFade 18s infinite;
+}
+.clerid-hero__slide:nth-child(1) { animation-delay: 0s; }
+.clerid-hero__slide:nth-child(2) { animation-delay: 6s; }
+.clerid-hero__slide:nth-child(3) { animation-delay: 12s; }
+@media (prefers-reduced-motion: reduce) {
+  .clerid-hero__slide { animation: none; opacity: 0; }
+  .clerid-hero__slide:nth-child(1) { opacity: 1; }
+}
+.clerid-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,10,12,0.78) 0%, rgba(10,10,12,0.62) 100%);
+}
+.clerid-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  padding: var(--space-8) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.clerid-hero__inner .page-title { font-size: var(--display-1); }
+.clerid-hero__inner .body { text-align: center; }
+.clerid-hero__inner .body--prose { font-size: var(--text-lede); max-width: 60ch; }
+@media (max-width: 640px) {
+  .clerid-hero { min-height: 420px; }
+  .clerid-hero__inner { padding: var(--space-6) var(--space-5); }
+}
+
+/* Main padding-top is meant for plain text pages; the full-bleed hero sits flush under the nav instead */
+.main--hero-flush { padding-top: 0; }
+
+/* ── Concept: Raven-inspired direction test for Clerid (clerid-concept.html only) ─ */
+.concept-hero {
+  padding: clamp(64px, 9vw, 120px) var(--gutter) clamp(56px, 7vw, 96px);
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+.concept-kicker {
+  margin: 0 0 var(--space-5);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.006em;
+  color: var(--accent-text);
+}
+.concept-headline {
+  margin: 0;
+  font-size: clamp(36px, 5.6vw, 76px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-weight: 300;
+  color: var(--text-strong);
+}
+.concept-sub {
+  margin: var(--space-5) auto 0;
+  max-width: 52ch;
+  font-size: var(--text-lede);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+/* Bracket corners: kept as a quiet framing device on claim screenshots below */
+.concept-panel__bracket {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--accent-text);
+}
+.concept-panel__bracket--tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.concept-panel__bracket--tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+.concept-panel__bracket--bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+.concept-panel__bracket--br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+/* ── Concept claims: bracketed media, no numbering ───────────────────── */
+.concept-claims { display: flex; flex-direction: column; }
+.concept-claim {
+  padding: clamp(56px, 8vw, 96px) 0;
+  border-top: 1px solid var(--border-hair);
+}
+.concept-claim:last-child { border-bottom: 1px solid var(--border-hair); }
+.concept-claims > .concept-claim:first-child { border-top: none; }
+.concept-claim__title {
+  margin: 0;
+  font-size: var(--display-3);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--track-heading);
+  font-weight: var(--weight-medium);
+  color: var(--text-strong);
+  max-width: 20ch;
+}
+.concept-claim__sentence {
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 52ch;
+}
+.concept-claim__media {
+  position: relative;
+  margin-top: var(--space-6);
+}
+.concept-claim__media img {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--border-hair);
+}
+.concept-claim__media .concept-panel__bracket { width: 18px; height: 18px; }
 
 /* ── Claims (Clerid: short heading + sentence + media, Palantir-style) ─ */
 .claims {
