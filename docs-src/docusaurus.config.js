@@ -1,5 +1,18 @@
 // @ts-check
 // See: https://docusaurus.io/docs/api/docusaurus-config
+//
+// EMERGENCY: the internal docs instance is disabled in this build.
+// Confirmed live (unauthenticated curl) that Docusaurus compiles ALL
+// pages — public and internal alike — into a shared JS bundle under
+// /docs/assets/js/*, a path neither Cloudflare Access nor Azure's
+// employee-role gate protects (both only gate the /docs/internal/* HTML
+// route, not the JS chunks that actually render it, or that carry the
+// route manifest for every page). Real internal content was retrievable
+// with zero auth. See content/internal/standards/adrs/0006-*.md for the
+// full writeup and the real fix (an isolated build/deployment for
+// internal docs). Content under content/internal/ is untouched — only
+// excluded from THIS build until that isolated build exists. Do not
+// re-enable the plugins below without that isolation in place.
 
 import {themes as prismThemes} from 'prism-react-renderer';
 
@@ -62,21 +75,20 @@ const config = {
   ],
 
   plugins: [
-    // INTERNAL docs instance — served at /docs/internal/. Content lives in
-    // content/internal/. Gate this route in staticwebapp.config.json
-    // (allowedRoles) once auth is configured on the Azure resource.
-    [
-      '@docusaurus/plugin-content-docs',
-      /** @type {import('@docusaurus/plugin-content-docs').Options} */
-      ({
-        id: 'internal',
-        path: 'content/internal',
-        routeBasePath: 'internal',
-        sidebarPath: './sidebarsInternal.js',
-        editUrl:
-          'https://github.com/PanderoseCore/panderose-deploy/tree/main/docs-src/',
-      }),
-    ],
+    // INTERNAL docs instance — DISABLED, see the emergency note at the
+    // top of this file and ADR 0006. Do not uncomment until internal
+    // docs have an isolated build that doesn't share this JS bundle.
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'internal',
+    //     path: 'content/internal',
+    //     routeBasePath: 'internal',
+    //     sidebarPath: './sidebarsInternal.js',
+    //     editUrl:
+    //       'https://github.com/PanderoseCore/panderose-deploy/tree/main/docs-src/',
+    //   },
+    // ],
 
     // Generates API reference pages for the PUBLIC instance from
     // specs/public/*.json — see specs/README.md for the sync contract.
@@ -98,24 +110,24 @@ const config = {
       },
     ],
 
-    // Same, for the INTERNAL instance from specs/internal/*.json
-    // (e.g. cambium).
-    [
-      'docusaurus-plugin-openapi-docs',
-      {
-        id: 'openapi-internal',
-        docsPluginId: 'internal',
-        config: {
-          internalApi: {
-            specPath: 'specs/internal',
-            outputDir: 'content/internal/api',
-            sidebarOptions: {
-              groupPathsBy: 'tag',
-            },
-          },
-        },
-      },
-    ],
+    // Same, for the INTERNAL instance — DISABLED alongside the internal
+    // docs plugin above, same reason.
+    // [
+    //   'docusaurus-plugin-openapi-docs',
+    //   {
+    //     id: 'openapi-internal',
+    //     docsPluginId: 'internal',
+    //     config: {
+    //       internalApi: {
+    //         specPath: 'specs/internal',
+    //         outputDir: 'content/internal/api',
+    //         sidebarOptions: {
+    //           groupPathsBy: 'tag',
+    //         },
+    //       },
+    //     },
+    //   },
+    // ],
   ],
 
   themes: ['docusaurus-theme-openapi-docs'],
@@ -140,13 +152,7 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
-          {
-            type: 'docSidebar',
-            docsPluginId: 'internal',
-            sidebarId: 'internalSidebar',
-            position: 'left',
-            label: 'Internal',
-          },
+          // Internal nav item removed alongside the disabled plugin above.
           {
             href: 'https://panderose.com',
             label: 'panderose.com',
@@ -167,7 +173,7 @@ const config = {
             items: [
               {label: 'Getting started', to: '/getting-started'},
               {label: 'Guides', to: '/guides'},
-              {label: 'Internal (sign-in required)', to: '/internal'},
+              // Internal link removed alongside the disabled plugin above.
             ],
           },
           {

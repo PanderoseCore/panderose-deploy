@@ -10,10 +10,12 @@ Welcome to the developer documentation for software and tools published by
 Panderose.
 
 This is the **public** documentation instance — guides, SDK references, and
-API documentation for anything we ship outside the company. If you're
-looking for internal engineering standards, cyber-assessment infrastructure
-docs, or unpublished API internals, see the
-[internal docs](/internal) instead (requires sign-in).
+API documentation for anything we ship outside the company. Internal
+engineering standards, cyber-assessment infrastructure docs, and
+unpublished API internals live in a separate internal instance that is
+temporarily offline while it's rebuilt with proper isolation (see
+[ADR 0006](https://github.com/PanderoseCore/panderose-deploy/blob/main/docs-src/content/internal/standards/adrs/0006-shared-bundle-leak.md)
+if you have repo access) — not linked from here in the meantime.
 
 ## What's here
 
