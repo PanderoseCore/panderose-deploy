@@ -17,7 +17,7 @@ there for the trade study.
 - [0002 — Single Azure Static Web Apps resource vs. a second one for docs](./single-swa-resource)
 - [0003 — Commit built docs/ output rather than relying on a downstream build](./built-output-committed)
 - [0004 — Gate /docs/internal/* on a custom employee role, not authenticated](./employee-role-gate)
-- [0005 — Cloudflare Access as the employee login (proposed)](./cloudflare-access)
+- [0005 — Cloudflare Access as the employee login](./cloudflare-access)
 
 New ADRs go here as `NNNN-short-title.md`. Don't edit a merged ADR's
 decision in place — if circumstances change, write a new one that
