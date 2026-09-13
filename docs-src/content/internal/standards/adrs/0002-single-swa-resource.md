@@ -34,8 +34,12 @@ in resource group `Panderose_group`) serves both the marketing site and
 the docs site, at `panderose.com/docs`. Public vs. internal separation
 happens within that one deployment, at the routing layer:
 `staticwebapp.config.json` gates `/docs/internal/*` behind
-`allowedRoles: ["authenticated"]`, and `robots.txt`/`sitemap.xml` keep
-that section out of search indexing.
+`allowedRoles: ["employee"]` — a custom, invite-only role, not Azure's
+built-in `authenticated` role (which anyone can get by completing a
+zero-config login, regardless of who they are — see
+[ADR 0004](./employee-role-gate) for why that distinction mattered enough
+to be its own decision) — and `robots.txt`/`sitemap.xml` keep that section
+out of search indexing.
 
 ## Consequences
 
