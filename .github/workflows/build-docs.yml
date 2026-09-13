@@ -1,0 +1,80 @@
+name: Build docs (commit static output)
+
+# panderose-deploy does NOT deploy to Azure directly — that would bypass
+# the approval gate (push here -> review/approve -> synced to
+# panderose-site, which Azure actually watches). Instead, this workflow
+# builds the Docusaurus source in docs-src/ and commits the BUILT static
+# HTML into docs/ at the repo root, tracked in git.
+#
+# Why commit generated output instead of relying on a downstream build
+# step: it's not confirmed whether whatever syncs panderose-deploy's main
+# into panderose-site runs any build step, or just copies files. Committed
+# static HTML works either way — a dumb file copy serves it correctly, and
+# it matches how the rest of this repo already works (plain HTML/CSS, no
+# build step expected on the serving side). If the sync mechanism turns
+# out to run its own build, this is just redundant, not broken.
+#
+# docs/ is therefore GENERATED — do not hand-edit anything under docs/.
+# Edit docs-src/ and let this workflow regenerate docs/ on merge.
+
+on:
+  push:
+    branches: [main]
+    paths: ['docs-src/**', '.github/workflows/build-docs.yml']
+  pull_request:
+    paths: ['docs-src/**', '.github/workflows/build-docs.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Need a real ref (not detached-merge) to push a commit back.
+          ref: ${{ github.head_ref || github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: docs-src/package-lock.json
+
+      - name: Install dependencies
+        working-directory: docs-src
+        run: npm ci
+
+      - name: Generate API reference + build
+        working-directory: docs-src
+        run: npm run build:ci
+
+      - name: Replace committed docs/ with the fresh build
+        run: |
+          set -euo pipefail
+          rm -rf docs
+          mkdir -p docs
+          cp -r docs-src/build/. docs/
+
+      - name: Commit built docs/ if it changed
+        if: github.event_name == 'push'
+        run: |
+          set -euo pipefail
+          git config user.name "panderose-docs-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs
+          if git diff --cached --quiet; then
+            echo "No change in built docs/ output — nothing to commit."
+            exit 0
+          fi
+          git commit -m "docs: regenerate static output from docs-src [skip ci]"
+          git push
+
+      - name: Verify build is clean (PRs only, no commit)
+        if: github.event_name == 'pull_request'
+        run: |
+          if git status --porcelain docs | grep -q .; then
+            echo "docs-src/ changes would alter the built docs/ output."
+            echo "That's expected on a PR — the push-to-main build step will commit it."
+          fi
