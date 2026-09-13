@@ -16,8 +16,8 @@
 <meta name="theme-color" content="#0c0c0c" />
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260857" />
+<link rel="stylesheet" href="/styles.css?v=20260866" />
+<link rel="stylesheet" href="/site.css?v=20260867" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -31,7 +31,7 @@
 </script>
 </head>
 <body>
-<div class="page page--glow">
+<div class="page">
 
   <nav class="nav" aria-label="Main navigation">
     <div class="nav__inner">
@@ -55,40 +55,42 @@
   </nav>
 
     <main class="main main--hero-flush">
-    <section class="clerid-hero">
-      <img class="clerid-hero__slide" src="/assets/clerid/shipping-1.jpg" alt="" />
-      <img class="clerid-hero__slide" src="/assets/clerid/shipping-2.jpg" alt="" />
-      <img class="clerid-hero__slide" src="/assets/clerid/shipping-3.jpg" alt="" />
-      <div class="clerid-hero__scrim"></div>
-      <div class="clerid-hero__inner">
-        <h1 class="page-title">Clerid</h1>
-        <p class="body body--prose">Clerid turns unstructured records into structured, usable data, built first for federal vendor oversight and now extending into commercial industries.</p>
+    <section class="clerid-intro">
+      <div class="clerid-intro__inner">
+        <p class="clerid-intro__kicker">Clerid &middot; Records Intelligence</p>
+        <h1 class="clerid-intro__headline">One document in.<br />A structured, sourced record out.</h1>
+        <hr class="clerid-intro__divider" />
+        <p class="clerid-intro__sub">Built first for federal vendor oversight. Now extending into capital projects and contract tracking.</p>
       </div>
     </section>
 
-    <div class="program-grid">
-      <div class="program-grid__item">
-        <h2 class="block__title">The problem</h2>
-        <div class="text-panel">
-          <p class="line line--prose">The records that matter, filings, budget documents, meeting minutes, aren't missing. They're unreadable at scale, and no team has the hours to comb through hundreds of pages for the one signal that matters. So it doesn't get read: risk goes unflagged and opportunities get missed, and everyone finds out the hard way, after the audit, after the bid closes, after the moment to act has already passed.</p>
-        </div>
+    <div class="ps-row">
+      <div class="ps-row__label">The Problem</div>
+      <div class="ps-row__content">
+        <h2 class="ps-row__title">The record exists. Nobody has the hours to read it.</h2>
+        <p class="ps-row__text">Filings, budget documents, meeting minutes: none of it is missing. It's unreadable at scale, and no team can comb hundreds of pages for the one signal that matters. So it doesn't get read: risk goes unflagged, opportunities get missed, and everyone finds out the hard way, after the audit, after the bid closes, after the moment to act has passed.</p>
       </div>
-      <div class="program-grid__item">
-        <h2 class="block__title">Clerid's solution</h2>
-        <div class="text-panel">
-          <p class="line line--prose">One engine does the same job no matter what it's pointed at: pull in a document, extract the structured records inside it, classify what it finds, and flag what needs a person's eyes, with a sourced trail back to the original every time.</p>
-          <p class="line line--prose">It already runs three ways, vendor screening, capital-projects extraction, and contract-action tracking, proven against real government records, not synthetic test data, and packaged into a branded report deck with every finding traced to a named source.</p>
-        </div>
+    </div>
+    <div class="ps-row ps-row--accent">
+      <div class="ps-row__label ps-row__label--accent">Clerid's Solution</div>
+      <div class="ps-row__content">
+        <h2 class="ps-row__title">One engine, pointed at any record, sourced every time.</h2>
+        <p class="ps-row__text">Pull in a document, extract the structured records inside it, classify what it finds, and flag what needs a person's eyes, with a sourced trail back to the original every time.</p>
+        <p class="ps-row__text">Proven against real government records, not synthetic test data, and packaged into a branded report deck with every finding traced to a named source.</p>
       </div>
     </div>
 
-    <div class="claims">
+    <div class="claims claims--stacked">
       <div class="claim">
         <div class="claim__text">
           <h2 class="claim__title">One engine, three domains already live</h2>
           <p class="claim__sentence">Vendor screening, capital projects, and contract tracking all run on the same core engine, exported as one cross-domain workbook.</p>
         </div>
-        <img class="claim__media" src="/assets/clerid/export-domains.png" alt="Clerid's Export screen showing Vendors, Contract Actions, a cross-domain workbook, and a generated report deck, all pulled from the same engagement." />
+        <div class="claim__media-frame">
+          <span class="claim__bracket claim__bracket--tl"></span>
+          <span class="claim__bracket claim__bracket--br"></span>
+          <img class="claim__media" src="/assets/clerid/export-domains.png" alt="Clerid's Export screen showing Vendors, Contract Actions, a cross-domain workbook, and a generated report deck, all pulled from the same engagement." />
+        </div>
       </div>
 
       <div class="claim">
@@ -96,7 +98,11 @@
           <h2 class="claim__title">Every result traces back to its source</h2>
           <p class="claim__sentence">Every extracted record keeps a reviewable trail back to the exact line in the source document it came from.</p>
         </div>
-        <img class="claim__media" src="/assets/clerid/hero-citation.png" alt="Clerid's Engage view: a capital-project record open next to the source PDF, with the exact line it was pulled from boxed in red, beside the live output table it feeds." />
+        <div class="claim__media-frame">
+          <span class="claim__bracket claim__bracket--tl"></span>
+          <span class="claim__bracket claim__bracket--br"></span>
+          <img class="claim__media" src="/assets/clerid/hero-citation.png" alt="Clerid's Engage view: a capital-project record open next to the source PDF, with the exact line it was pulled from boxed in red, beside the live output table it feeds." />
+        </div>
       </div>
 
       <div class="claim">
@@ -104,7 +110,11 @@
           <h2 class="claim__title">Nothing ships without human review</h2>
           <p class="claim__sentence">Approve, reject, or flag for changes, every extracted record gets a person's eyes before anyone treats it as final.</p>
         </div>
-        <img class="claim__media" src="/assets/clerid/review-cycle.png" alt="Clerid's Review screen listing extracted contract-action records pending approval, reject, or needs-changes." />
+        <div class="claim__media-frame">
+          <span class="claim__bracket claim__bracket--tl"></span>
+          <span class="claim__bracket claim__bracket--br"></span>
+          <img class="claim__media" src="/assets/clerid/review-cycle.png" alt="Clerid's Review screen listing extracted contract-action records pending approval, reject, or needs-changes." />
+        </div>
       </div>
     </div>
 
