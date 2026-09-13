@@ -1,19 +1,22 @@
-# dev.panderose.com — developer docs
+# panderose.com/docs — developer docs
 
 A [Docusaurus](https://docusaurus.io/) site with two doc instances sharing
-one theme/nav shell:
+one theme/nav shell, deployed under the **same** Azure Static Web Apps
+resource as the marketing site (see
+[ADR 0002](./content/internal/standards/adrs/0002-single-swa-resource.md)
+for why it's one resource, not a separate `dev.panderose.com`):
 
-- **Public** (`content/public/`) — served at `dev.panderose.com/docs/`.
+- **Public** (`content/public/`) — served at `panderose.com/docs/`.
   Guides + API reference for anything Panderose publishes externally.
 - **Internal** (`content/internal/`) — served at
-  `dev.panderose.com/docs/internal/`. Engineering standards, cyber
-  assessment infrastructure notes, and the Cambium-backed
-  opportunity/ontology program. Meant to be gated to signed-in org members
-  via Azure Static Web Apps role-based routing (see
-  `staticwebapp.config.json`'s `allowedRoles` on that route) — **the
-  routing rule ships here, but someone with Azure portal access still has
-  to configure the identity provider and role assignment** before this is
-  actually access-controlled in production.
+  `panderose.com/docs/internal/`. Engineering standards, cyber assessment
+  infrastructure notes, repo architecture, and the Cambium-backed
+  opportunity/ontology program. Gated via the root
+  `staticwebapp.config.json`'s `allowedRoles` on that route, and excluded
+  from `robots.txt`/`sitemap.xml` — **the routing rule ships here, but
+  someone with Azure portal access still has to configure an identity
+  provider and role assignment** before this is actually access-controlled
+  in production. See `infra/README.md`.
 
 API reference pages are never hand-written — they're generated at build
 time from OpenAPI specs in `specs/public/` and `specs/internal/` via
@@ -26,23 +29,24 @@ expected to keep its spec in sync here.
 ```bash
 npm install
 npm run gen-api-docs:all   # (re)generate API reference from specs/
-npm start                  # dev server, hot reload
+npm start                  # dev server, hot reload — http://localhost:3000/docs/
 ```
 
 ## Production build
 
 ```bash
-npm run build:ci           # gen-api-docs + docusaurus build -> build/
-./scripts/package-for-swa.sh   # repackages build/ under dist/docs/ to match
-                               # the /docs/ baseUrl this site is deployed at
+npm run build:ci                # gen-api-docs + docusaurus build -> build/
+cd .. && ./scripts/package-site.sh   # from repo root: builds docs AND assembles
+                                     # the full site (marketing + docs) the way
+                                     # CI deploys it, into dist/
 ```
 
-`.github/workflows/dev-docs.yml` runs exactly this on push to `main`
-(scoped to `docs/**` changes) and deploys `docs/dist` to a dedicated Azure
-Static Web Apps resource — see the comment block at the top of that
-workflow for the one-time Azure/Cloudflare setup it depends on (creating
-the SWA resource, its deployment token secret, and the `dev.panderose.com`
-CNAME).
+`.github/workflows/azure-deploy.yml` at the repo root runs the same build
+on push to `main`, assembles the marketing site + this docs build into one
+package, and deploys it to the one Azure Static Web Apps resource — see
+that workflow's header comment and `infra/README.md` for the one-time
+Azure setup it depends on (the resource itself, and the
+`AZURE_STATIC_WEB_APPS_API_TOKEN` repo secret).
 
 ## Adding content
 
@@ -55,3 +59,5 @@ CNAME).
 - New service's API reference → don't write it by hand; land its OpenAPI
   spec in `specs/public/` or `specs/internal/` per
   [`specs/README.md`](./specs/README.md).
+- Non-obvious technical decision about this docs site itself → add an ADR
+  under `content/internal/standards/adrs/`.

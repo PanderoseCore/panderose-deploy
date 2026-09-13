@@ -6,9 +6,12 @@ desktop.ini
 .vscode/
 .idea/
 
-# Node / tooling (not used by this static site, but safe to ignore)
+# Node / tooling (docs/ uses Node; the root site itself still doesn't)
 node_modules/
 npm-debug.log*
+
+# Build output — assembled by scripts/package-site.sh / CI, never committed
+/dist
 
 # Local env / secrets — never commit
 .env

@@ -5,7 +5,9 @@ title: Standards & Practices
 
 # Standards & Practices
 
-Placeholder section. Suggested pages to fill in first, roughly in order of
+See [Architecture Decision Records](./adrs) for the trade studies behind
+this docs site's own design (platform choice, hosting architecture). The
+rest of this section is a placeholder. Suggested pages to fill in first, roughly in order of
 how much day-to-day ambiguity they'd remove:
 
 - **API design conventions** — REST/FastAPI conventions (versioning, error

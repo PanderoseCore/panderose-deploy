@@ -13,11 +13,14 @@ const config = {
     v4: true,
   },
 
-  // This site is deployed under dev.panderose.com/docs (path-based, not a
-  // separate subdomain) — see staticwebapp.config.json and
-  // .github/workflows/dev-docs.yml at the repo root for how the build
-  // output ends up physically under /docs/ to match this baseUrl.
-  url: 'https://dev.panderose.com',
+  // Deployed under the SAME Azure Static Web Apps resource as the main
+  // marketing site, at the /docs path (not a separate subdomain/resource
+  // — see the ADR at content/internal/standards/adrs/0002-single-swa-resource.md
+  // for why). staticwebapp.config.json at the repo root (not here — SWA
+  // only reads one, at the app root) and .github/workflows/azure-deploy.yml
+  // both assume the build output ends up physically under /docs/ to match
+  // this baseUrl.
+  url: 'https://panderose.com',
   baseUrl: '/docs/',
 
   organizationName: 'PanderoseCore',
@@ -48,7 +51,7 @@ const config = {
           routeBasePath: '/',
           sidebarPath: './sidebarsPublic.js',
           editUrl:
-            'https://github.com/PanderoseCore/panderose-deploy/tree/dev-docs/docs/',
+            'https://github.com/PanderoseCore/panderose-deploy/tree/main/docs/',
         },
         blog: false,
         theme: {
@@ -71,7 +74,7 @@ const config = {
         routeBasePath: 'internal',
         sidebarPath: './sidebarsInternal.js',
         editUrl:
-          'https://github.com/PanderoseCore/panderose-deploy/tree/dev-docs/docs/',
+          'https://github.com/PanderoseCore/panderose-deploy/tree/main/docs/',
       }),
     ],
 

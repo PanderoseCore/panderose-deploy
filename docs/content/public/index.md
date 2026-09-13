@@ -36,12 +36,12 @@ docs/
 Reference pages under **API** are not hand-written. Each backend service
 (built with FastAPI) already exposes a live `/openapi.json`. A CI step in
 that service's own repository exports the spec and syncs it into
-[`specs/public/`](https://github.com/PanderoseCore/panderose-deploy/tree/dev-docs/docs/specs/public)
+[`specs/public/`](https://github.com/PanderoseCore/panderose-deploy/tree/main/docs/specs/public)
 or `specs/internal/` here on every merge to its main branch. This docs site
 regenerates the reference section from those specs on every build via
 [`docusaurus-plugin-openapi-docs`](https://github.com/PalmettoSoftware/docusaurus-openapi-docs) —
 so reference docs are always in sync with what's actually deployed, with
 zero hand maintenance.
 
-See [`specs/README.md`](https://github.com/PanderoseCore/panderose-deploy/tree/dev-docs/docs/specs)
+See [`specs/README.md`](https://github.com/PanderoseCore/panderose-deploy/tree/main/docs/specs)
 for the exact sync contract each service repo should implement.

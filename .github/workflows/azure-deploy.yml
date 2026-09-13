@@ -1,0 +1,82 @@
+name: Deploy panderose.com (site + docs)
+
+# Single pipeline for the whole property: the static marketing site at the
+# repo root, plus the developer docs (built with Docusaurus) assembled
+# under /docs. Both are served by ONE Azure Static Web Apps resource —
+# see infra/README.md for why this repo intentionally does not stand up a
+# second SWA resource / second custom domain for docs.
+#
+# One-time setup this depends on (can't be done from a GitHub Action):
+#   1. Create the Azure Static Web App resource — either via the portal
+#      (Static Web Apps -> Create -> Free plan, skip GitHub connection so
+#      Azure doesn't auto-commit a competing workflow) OR non-interactively
+#      once you have `az` access again via infra/deploy.sh (see infra/README.md).
+#   2. Copy its deployment token (resource -> Overview -> "Manage deployment
+#      token") and add it as a repo secret named
+#      AZURE_STATIC_WEB_APPS_API_TOKEN.
+#   3. If the resource already has custom domains (panderose.com,
+#      www.panderose.com) from before, nothing else changes — this same
+#      deployment now also serves /docs/* on those same domains.
+#   4. If/when /docs/internal needs to be gated as more than "any signed-in
+#      user," configure an identity provider (Entra ID or GitHub) + a custom
+#      role on this SWA resource and update the "authenticated" role in
+#      staticwebapp.config.json.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build_and_deploy:
+    if: github.event_name == 'push' || github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    name: Build and deploy
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install docs dependencies
+        working-directory: docs
+        run: npm ci
+
+      - name: Generate API reference + build docs
+        working-directory: docs
+        run: npm run build:ci
+
+      - name: Assemble deploy package (site root + docs/build under /docs)
+        run: ./scripts/package-site.sh --skip-docs-build
+        # --skip-docs-build: docs/build already exists from the previous
+        # step; package-site.sh's own docs build would just redo it.
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: 'upload'
+          app_location: 'dist'
+          api_location: ''
+          output_location: ''
+          skip_app_build: true
+
+  close_pull_request:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close PR preview environment
+    steps:
+      - name: Close pull request environment
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: 'close'
