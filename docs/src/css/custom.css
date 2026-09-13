@@ -1,0 +1,29 @@
+/**
+ * Panderose brand colors — kept in sync with the main site's
+ * tokens/colors.css (--pan-blue etc). Any CSS here is global; Infima is
+ * the CSS framework the classic template bundles.
+ */
+
+:root {
+  --ifm-color-primary: #0066b3;
+  --ifm-color-primary-dark: #005ba1;
+  --ifm-color-primary-darker: #005697;
+  --ifm-color-primary-darkest: #00477d;
+  --ifm-color-primary-light: #0071c5;
+  --ifm-color-primary-lighter: #0076cf;
+  --ifm-color-primary-lightest: #2b8ada;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* Lighter palette in dark mode, matching the main site's --pan-blue-sky. */
+[data-theme='dark'] {
+  --ifm-color-primary: #5b9fe0;
+  --ifm-color-primary-dark: #3f8cda;
+  --ifm-color-primary-darker: #2f82d7;
+  --ifm-color-primary-darkest: #1f6bc0;
+  --ifm-color-primary-light: #77b2e5;
+  --ifm-color-primary-lighter: #86bbe8;
+  --ifm-color-primary-lightest: #b0d3f0;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
