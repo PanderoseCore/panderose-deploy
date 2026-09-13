@@ -7,12 +7,17 @@
 <title>Terms of Service | Panderose</title>
 <meta name="description" content="Terms of use for panderose.com. Governing law: State of Arizona, United States." />
 <meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Terms of Service | Panderose" />
+<meta property="og:description" content="Terms of use for panderose.com. Governing law: State of Arizona, United States." />
+<meta property="og:url" content="https://panderose.com/terms" />
+<meta property="og:image" content="https://panderose.com/assets/og-panderose.png" />
 <link rel="canonical" href="https://panderose.com/terms" />
 <meta name="theme-color" content="#0c0c0c" />
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260702" />
+<link rel="stylesheet" href="/styles.css?v=20260866" />
+<link rel="stylesheet" href="/site.css?v=20260867" />
 </head>
 <body>
 <div class="page">
@@ -23,9 +28,15 @@
         <img src="/assets/logo.png" alt="Panderose" />
         <span>Panderose</span>
       </a>
-      <div class="nav__links">
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <div class="nav__links" id="nav-links">
+        <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
       </div>
@@ -39,9 +50,17 @@
     <section class="block">
       <dl class="defs">
         <dt>Scope</dt>
-        <dd>Site use and contracted services. No contract is formed by site use alone.</dd>
+        <dd>These terms cover use of panderose.com. They don't cover contracted services, which are governed by their own signed agreements. No contract is formed by site use alone.</dd>
+        <dt>Acceptable use</dt>
+        <dd>Don't use this site to violate applicable law, attempt unauthorized access to our systems, or interfere with the site's normal operation.</dd>
         <dt>Intellectual property</dt>
-        <dd>All content and software are owned by Panderose.</dd>
+        <dd>All content and software on this site are owned by Panderose or used with permission, unless otherwise credited. Nothing here grants you a license to reproduce or redistribute it.</dd>
+        <dt>No warranty</dt>
+        <dd>This site and the information on it are provided as is, without warranties of any kind, express or implied.</dd>
+        <dt>Limitation of liability</dt>
+        <dd>To the extent permitted by law, Panderose is not liable for damages arising from your use of this site.</dd>
+        <dt>Changes to these terms</dt>
+        <dd>If these terms change materially, we'll update the effective date above.</dd>
         <dt>Governing law</dt>
         <dd>Arizona.</dd>
         <dt>Contact</dt>
@@ -62,13 +81,15 @@
       <nav class="footer__col" aria-label="Company">
         <h3 class="footer__h">Company</h3>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/clerid">Clerid</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
+        <a href="/news">News</a>
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>
-        <a href="/security">Security</a>
+        <a href="/compliance#security">Security</a>
         <span class="footer__muted">Capabilities Statement<span class="footer__note">In preparation</span></span>
       </nav>
       <nav class="footer__col" aria-label="Legal">
@@ -86,5 +107,6 @@
   </footer>
 
 </div>
+<script src="/assets/nav.js?v=20260819"></script>
 </body>
 </html>

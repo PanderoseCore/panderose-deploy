@@ -1,22 +1,23 @@
-<!-- @dsCard group="Panderose.com" viewport="1320x1400" name="Capabilities" subtitle="Detailed capability pages" -->
+<!-- @dsCard group="Panderose.com" viewport="1320x1400" name="Company" subtitle="Leadership + capabilities" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Capabilities | Panderose</title>
-<meta name="description" content="Panderose builds federal procurement analytics, defense supply chain software, compliance automation, and federal data systems. Detailed capability overview." />
+<title>Company | Panderose</title>
+<meta name="description" content="Panderose: leadership, and the federal procurement analytics, supply chain intelligence, research automation, and data sovereignty capabilities we build." />
 <meta name="robots" content="index, follow" />
-<link rel="canonical" href="https://panderose.com/capabilities" />
+<link rel="canonical" href="https://panderose.com/company" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Capabilities | Panderose" />
-<meta property="og:description" content="Federal procurement analytics, defense supply chain software, compliance automation, and federal data systems." />
-<meta property="og:url" content="https://panderose.com/capabilities" />
+<meta property="og:title" content="Company | Panderose" />
+<meta property="og:description" content="Panderose leadership, and the capabilities we build: federal procurement analytics, supply chain intelligence, research automation, and data sovereignty." />
+<meta property="og:url" content="https://panderose.com/company" />
+<meta property="og:image" content="https://panderose.com/assets/og-panderose.png" />
 <meta name="theme-color" content="#0c0c0c" />
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260702" />
+<link rel="stylesheet" href="/styles.css?v=20260866" />
+<link rel="stylesheet" href="/site.css?v=20260867" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -66,18 +67,67 @@
         <img src="/assets/logo.png" alt="Panderose" />
         <span>Panderose</span>
       </a>
-      <div class="nav__links">
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <div class="nav__links" id="nav-links">
+        <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
       </div>
     </div>
   </nav>
 
+  <div class="page-brand">
+    <div class="page-brand__globe">
+      <canvas data-globe></canvas>
+    </div>
+    <div class="page-brand__inner">
+      <img src="/assets/logo.png" alt="" />
+      <span>Panderose</span>
+    </div>
+  </div>
+
   <main class="main">
-    <h1 class="page-title">Capabilities</h1>
-    <p class="body body--prose">Panderose builds four categories of software for defense and federal procurement programs. Each is purpose-built for government data and compliance requirements, not adapted from commercial tooling.</p>
+    <h1 class="page-title">Company</h1>
+    <p class="body body--prose">Panderose is a records intelligence software company built and run by its founders out of Prescott, Arizona, developing Clerid and the capabilities below for federal procurement, defense logistics, and enterprise compliance.</p>
+
+    <section class="block" id="leadership">
+      <h2 class="block__title">Leadership</h2>
+      <div class="team">
+        <div class="team__founders">
+          <div class="member">
+            <img class="member__photo" src="/assets/hayden.jpg?v=20260702" alt="Hayden Fay" />
+            <div class="member__body">
+              <p class="member__name">Hayden Fay</p>
+              <p class="member__role">Co-Founder and CEO</p>
+              <div class="member__bio">
+                <p class="member__edu">Runs Panderose's finances, operations, and commercialization strategy, and led the company's SBIR engagement with the Defense Logistics Agency from first contact through proposal. B.S. Global Business and Supply Chain Management, Embry-Riddle Aeronautical University (expected 2030).</p>
+              </div>
+            </div>
+          </div>
+          <div class="member">
+            <img class="member__photo member__photo--top" src="/assets/johnathan.jpg?v=20260702" alt="Johnathan Hockersmith" />
+            <div class="member__body">
+              <p class="member__name">Johnathan Hockersmith</p>
+              <p class="member__role">Co-Founder and CTO</p>
+              <div class="member__bio">
+                <p class="member__edu">Principal architect of Clerid, from entity resolution to the audit trail behind every result. Built large-scale government data aggregation systems before Panderose, and serves as Experiment Lead for NASA's EagleSat-3 mission under a NASA Ignite research fellowship. B.S. Cyber Intelligence and Security, Embry-Riddle Aeronautical University (expected 2029).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-transition" id="capabilities">
+      <h2 class="section-transition__title">Capabilities</h2>
+      <p class="section-transition__desc">Panderose builds across four related capabilities in federal procurement, defense logistics, and compliance. Each one is purpose-built from the ground up for the complexity of government and enterprise data.</p>
+    </section>
 
     <section class="block" id="procurement-analytics">
       <h2 class="block__title">Federal Procurement Analytics</h2>
@@ -85,38 +135,38 @@
       <ul class="line line--prose">
         <li>Contract spend and obligation tracking across federal award data sources</li>
         <li>Vendor and contractor risk signals derived from award history</li>
-        <li>Structured outputs designed for audit and oversight review, not just dashboards</li>
+        <li>Structured outputs built for audit and oversight review</li>
       </ul>
     </section>
 
     <section class="block" id="supply-chain">
-      <h2 class="block__title">Defense Supply Chain Software</h2>
-      <p class="line line--prose">Defense logistics programs depend on visibility into vendors and sub-tier suppliers that primes and program offices often lack. Panderose builds software that maps supplier relationships and flags disruption or concentration risk before it affects a program.</p>
+      <h2 class="block__title">Supply Chain Intelligence</h2>
+      <p class="line line--prose">Supply chains depend on visibility into vendors and sub-tier suppliers that primes, program offices, and enterprise procurement teams alike often lack. Panderose builds software that maps supplier relationships and flags disruption or concentration risk before it affects a program or a business.</p>
       <ul class="line line--prose">
-        <li>Vendor and sub-tier supplier mapping for defense logistics programs</li>
+        <li>Vendor and sub-tier supplier mapping for defense logistics programs and commercial supply chains alike</li>
         <li>Disruption and single-source risk flagging</li>
-        <li>Designed to integrate with existing program office data, not replace it</li>
+        <li>Designed to integrate directly with existing program or procurement data</li>
       </ul>
     </section>
 
     <section class="block" id="compliance-automation">
-      <h2 class="block__title">Compliance Automation</h2>
-      <p class="line line--prose">Federal audit and oversight programs require records that are structured, verifiable, and reproducible. Panderose builds automation that generates these records as a byproduct of normal system operation, with controls aligned to NIST SP 800-171 and CMMC Level 2 practices.</p>
+      <h2 class="block__title">Research Automation</h2>
+      <p class="line line--prose">Federal audit and oversight programs, and enterprise compliance teams alike, require records that are structured, verifiable, and reproducible. Panderose builds automation that generates these records as a byproduct of normal system operation, with controls aligned to NIST SP 800-171 and CMMC Level 2 practices, the same rigor enterprise compliance programs increasingly adopt.</p>
       <ul class="line line--prose">
-        <li>Automated generation of audit-ready, structured compliance records</li>
+        <li>Automated generation of audit-ready, structured compliance records for federal and enterprise programs alike</li>
         <li>Controls aligned to NIST SP 800-171 and CMMC Level 2 practices</li>
-        <li>Built for unclassified government workloads on infrastructure Panderose owns and operates</li>
+        <li>Built for unclassified government and enterprise workloads on infrastructure Panderose owns and operates</li>
       </ul>
-      <p class="line line--prose"><a href="/security">See our security and compliance posture</a>.</p>
+      <p class="line line--prose"><a href="/compliance#security">See our security and compliance posture</a>.</p>
     </section>
 
     <section class="block" id="federal-data-systems">
-      <h2 class="block__title">Federal Data Systems</h2>
+      <h2 class="block__title">Data Sovereignty</h2>
       <p class="line line--prose">Government data is rarely clean or co-located. Panderose builds pipelines that normalize and reason over complex, multi-source federal data, so downstream analytics and compliance tooling can rely on a consistent structure.</p>
       <ul class="line line--prose">
         <li>Normalization pipelines for multi-source, multi-format government data</li>
         <li>Reasoning layers built for procurement and oversight use cases</li>
-        <li>Foundation for the procurement analytics and compliance automation capabilities above</li>
+        <li>Foundation for the procurement analytics and research automation capabilities above</li>
       </ul>
     </section>
 
@@ -139,13 +189,15 @@
       <nav class="footer__col" aria-label="Company">
         <h3 class="footer__h">Company</h3>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/clerid">Clerid</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
+        <a href="/news">News</a>
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>
-        <a href="/security">Security</a>
+        <a href="/compliance#security">Security</a>
         <span class="footer__muted">Capabilities Statement<span class="footer__note">In preparation</span></span>
       </nav>
       <nav class="footer__col" aria-label="Legal">
@@ -163,5 +215,7 @@
   </footer>
 
 </div>
+<script src="/assets/globe.js?v=20260828"></script>
+<script src="/assets/nav.js?v=20260819"></script>
 </body>
 </html>

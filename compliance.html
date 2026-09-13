@@ -5,14 +5,19 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Compliance | Panderose</title>
-<meta name="description" content="Panderose compliance and registration. SAM.gov active. UEI T19FTZBKG6X7." />
+<meta name="description" content="Panderose compliance, registration, and security posture. SAM.gov active. UEI T19FTZBKG6X7. NIST SP 800-171 aligned controls; CMMC Level 2 self-assessment in progress." />
 <meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Compliance | Panderose" />
+<meta property="og:description" content="Panderose compliance, registration, and security posture. SAM.gov active. UEI T19FTZBKG6X7. NIST SP 800-171 aligned controls; CMMC Level 2 self-assessment in progress." />
+<meta property="og:url" content="https://panderose.com/compliance" />
+<meta property="og:image" content="https://panderose.com/assets/og-panderose.png" />
 <link rel="canonical" href="https://panderose.com/compliance" />
 <meta name="theme-color" content="#0c0c0c" />
 <link rel="icon" type="image/png" href="/assets/logo.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<link rel="stylesheet" href="/styles.css?v=20260702" />
-<link rel="stylesheet" href="/site.css?v=20260702" />
+<link rel="stylesheet" href="/styles.css?v=20260866" />
+<link rel="stylesheet" href="/site.css?v=20260867" />
 </head>
 <body>
 <div class="page">
@@ -23,9 +28,15 @@
         <img src="/assets/logo.png" alt="Panderose" />
         <span>Panderose</span>
       </a>
-      <div class="nav__links">
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <div class="nav__links" id="nav-links">
+        <a href="/clerid">Clerid</a>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
       </div>
@@ -66,6 +77,13 @@
       <h2 class="block__title">Federal positioning</h2>
       <p class="line line--prose">Panderose is positioned to support acquisition and oversight functions across the 24 CFO Act agencies. We operate under applicable federal acquisition regulations.</p>
     </section>
+
+    <section class="block" id="security">
+      <h2 class="block__title">Security</h2>
+      <p class="line line--prose">Panderose takes an infrastructure-first approach to security. Systems that process controlled or sensitive work run on infrastructure Panderose owns and operates.</p>
+      <p class="line line--prose" style="margin-top: var(--space-4);">Controls aligned to NIST SP 800-171, with a CMMC Level 2 self-assessment in progress. Structured to handle unclassified government workloads, including Controlled Unclassified Information.</p>
+      <p class="line line--prose" style="margin-top: var(--space-4);">For security inquiries: <a href="mailto:contact@panderose.com">contact@panderose.com</a></p>
+    </section>
   </main>
 
   <footer class="footer">
@@ -80,13 +98,15 @@
       <nav class="footer__col" aria-label="Company">
         <h3 class="footer__h">Company</h3>
         <a href="/about">About</a>
-        <a href="/capabilities">Capabilities</a>
+        <a href="/clerid">Clerid</a>
+        <a href="/company">Company</a>
         <a href="/compliance">Compliance</a>
         <a href="/contact">Contact</a>
+        <a href="/news">News</a>
       </nav>
       <nav class="footer__col" aria-label="Trust">
         <h3 class="footer__h">Trust</h3>
-        <a href="/security">Security</a>
+        <a href="/compliance#security">Security</a>
         <span class="footer__muted">Capabilities Statement<span class="footer__note">In preparation</span></span>
       </nav>
       <nav class="footer__col" aria-label="Legal">
@@ -104,5 +124,6 @@
   </footer>
 
 </div>
+<script src="/assets/nav.js?v=20260819"></script>
 </body>
 </html>
