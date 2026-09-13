@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Example public API (placeholder)",
+    "version": "0.0.0",
+    "description": "Placeholder spec — delete once the first real public service spec lands, per specs/README.md."
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check (placeholder)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

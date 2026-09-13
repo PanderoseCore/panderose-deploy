@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cambium (placeholder)",
+    "version": "0.0.0",
+    "description": "Placeholder spec. Replace with the real export from jhockersmith/cambium's `/openapi.json` per specs/README.md — this file only exists so the docs build has a valid spec to render against."
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check (placeholder)",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

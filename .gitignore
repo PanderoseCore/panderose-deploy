@@ -6,9 +6,14 @@ desktop.ini
 .vscode/
 .idea/
 
-# Node / tooling (not used by this static site, but safe to ignore)
+# Node / tooling (docs-src/ uses Node; the rest of the site still doesn't)
 node_modules/
 npm-debug.log*
+
+# NOTE: docs/ (repo root) is intentionally NOT ignored — it's the
+# committed, generated static output of docs-src/, rebuilt by
+# scripts/package-site.sh or .github/workflows/build-docs.yml. Don't
+# hand-edit it and don't gitignore it.
 
 # Local env / secrets — never commit
 .env
