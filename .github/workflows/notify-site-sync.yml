@@ -1,0 +1,54 @@
+name: Notify panderose-site of new content
+
+# panderose-deploy is the working/dev repo for panderose.com. The Azure
+# Static Web App that actually serves panderose.com watches a separate,
+# private repo: Panderose/panderose-site (see
+# docs-src/content/internal/standards/adrs/0002-single-swa-resource.md).
+#
+# This workflow does NOT push content into panderose-site directly — that
+# would skip human review before something goes live. It only sends
+# panderose-site a repository_dispatch ping when main here changes. A
+# workflow over in panderose-site (not this repo — add it there
+# separately) reacts to that ping by pulling this repo's main and opening
+# a PR in panderose-site, so a human still approves the actual deploy by
+# merging it.
+#
+# Setup required (one-time, in panderose-deploy's repo settings):
+#   Settings -> Secrets and variables -> Actions -> New repository secret
+#   Name:  PANDEROSE_SITE_PAT
+#   Value: a token (fine-grained PAT recommended) that grants at least
+#          "Contents: Read and write" on Panderose/panderose-site — that
+#          permission covers triggering repository_dispatch events.
+#
+# Without that secret, this workflow fails loudly instead of silently
+# doing nothing, so a missing/expired token gets noticed.
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch to panderose-site
+        env:
+          PANDEROSE_SITE_PAT: ${{ secrets.PANDEROSE_SITE_PAT }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PANDEROSE_SITE_PAT:-}" ]; then
+            echo "::error::PANDEROSE_SITE_PAT secret is not set. See this file's header comment for setup steps."
+            exit 1
+          fi
+          http_code=$(curl -sS -o /tmp/dispatch-response.json -w "%{http_code}" -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${PANDEROSE_SITE_PAT}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/Panderose/panderose-site/dispatches \
+            -d "{\"event_type\":\"panderose-deploy-updated\",\"client_payload\":{\"sha\":\"${GITHUB_SHA}\",\"ref\":\"${GITHUB_REF}\"}}")
+          if [ "$http_code" != "204" ]; then
+            echo "::error::Dispatch to Panderose/panderose-site failed (HTTP $http_code):"
+            cat /tmp/dispatch-response.json
+            exit 1
+          fi
+          echo "Dispatched panderose-deploy-updated to Panderose/panderose-site for ${GITHUB_SHA}."
