@@ -17,6 +17,7 @@ docs, or unpublished API internals, see the
 
 ## What's here
 
+- **[Products](/products)** — documentation for shipped Panderose software.
 - **Getting started** — install and make your first call/import in minutes.
 - **Guides** — task-oriented walkthroughs for common integrations.
 - **API reference** — generated directly from each service's OpenAPI spec,
@@ -25,7 +26,7 @@ docs, or unpublished API internals, see the
 ## Structure
 
 ```
-docs/
+docs-src/
 ├── content/public/      # this instance — public guides + reference
 ├── content/internal/    # gated instance — internal standards & infra docs
 └── specs/               # OpenAPI specs synced from source repos (see below)

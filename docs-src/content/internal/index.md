@@ -49,3 +49,6 @@ or not.
   in a docs site rather than a runbook/wiki with tighter access control.
 - **[Opportunity / ontology program](/internal/opportunity-ontology)** — the
   Cambium-backed opportunity/ontology system.
+- **[Internal systems](/internal/systems)** — Clerid's internal
+  engine, Fox (context server), pdr-lapse, and RemMe's internal
+  architecture + generated API reference.
