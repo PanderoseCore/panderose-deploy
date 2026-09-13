@@ -117,11 +117,14 @@ supersedes it where they'd disagree).
 - `staticwebapp.config.json` sets `X-Content-Type-Options`,
   `X-Frame-Options`, `Referrer-Policy`, and a long-lived HSTS header
   site-wide.
-- `/docs/internal/*` requires the `authenticated` SWA role (once an
-  identity provider is actually configured on the Azure resource — not
-  yet confirmed as done) and is additionally excluded from
-  `robots.txt`/`sitemap.xml` so it isn't indexed even before that gate is
-  live.
+- `/docs/internal/*` requires the custom `employee` role — confirmed live
+  (returns 401 for anonymous requests) — not Azure's built-in
+  `authenticated` role, which anyone can satisfy via a zero-config login
+  flow (`/.auth/login/github`, etc.) without actually being a Panderose
+  employee. `employee` is invite-only: nobody has it until someone with
+  admin access on the Azure resource invites them via **Role
+  management** in the portal. Also excluded from `robots.txt`/`sitemap.xml`
+  so it isn't indexed regardless.
 - No secrets are committed anywhere in this repo. `panderose-deploy`
   holds no Azure deployment token — it can't deploy directly even if a
   workflow here tried to, by design (see ADR 0002's history note).

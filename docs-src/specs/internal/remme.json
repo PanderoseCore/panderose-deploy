@@ -1,0 +1,3098 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "RemMe API",
+    "description": "Ingestion and query gateway for the RemMe association engine.",
+    "version": "0.2.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Health",
+        "description": "Check reachability of all upstream services (internal).",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/public": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Health Public",
+        "description": "Public status endpoint \u2014 consumed by status.panderose.com. No auth required.",
+        "operationId": "health_public_health_public_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Register",
+        "description": "Create a new user account, send verification code, and return a JWT.",
+        "operationId": "register_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login",
+        "description": "Authenticate and return a JWT.",
+        "operationId": "login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/onboard": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Complete Onboarding",
+        "description": "Mark the current user's onboarding as complete.",
+        "operationId": "complete_onboarding_auth_onboard_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Me",
+        "description": "Return the current user's profile. is_admin is live from DB, not JWT.",
+        "operationId": "me_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserOut"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Delete Account",
+        "description": "Permanently delete the current user's account and all associated data.",
+        "operationId": "delete_account_auth_me_delete",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Forgot Password",
+        "description": "Send a password reset email. Always returns 200 to prevent email enumeration.",
+        "operationId": "forgot_password_auth_forgot_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/reset-password": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Reset Password",
+        "description": "Validate reset token and update password.",
+        "operationId": "reset_password_auth_reset_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/verify-email": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Verify Email",
+        "description": "Validate 6-digit code and mark account as verified.",
+        "operationId": "verify_email_auth_verify_email_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/auth/resend-verification": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Resend Verification",
+        "description": "Re-send the email verification code.",
+        "operationId": "resend_verification_auth_resend_verification_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/auth/change-password": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Change Password",
+        "description": "Change the authenticated user password after verifying the current one.",
+        "operationId": "change_password_auth_change_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/ingest": {
+      "post": {
+        "tags": [
+          "ingest"
+        ],
+        "summary": "Ingest a node into RemMe (synchronous)",
+        "description": "Synchronous ingest \u2014 blocks until embedded.",
+        "operationId": "ingest_ingest_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NodeIngestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/ingest/async": {
+      "post": {
+        "tags": [
+          "ingest"
+        ],
+        "summary": "Ingest a node into RemMe (asynchronous)",
+        "description": "Async ingest via Celery \u2014 returns immediately.",
+        "operationId": "ingest_async_ingest_async_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NodeIngestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsyncIngestResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/ingest/batch": {
+      "post": {
+        "tags": [
+          "ingest"
+        ],
+        "summary": "Batch ingest nodes into RemMe (asynchronous)",
+        "description": "Batch async ingest \u2014 queues all nodes as one Celery task, returns immediately.",
+        "operationId": "ingest_batch_ingest_batch_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "items": {
+                  "$ref": "#/components/schemas/NodeIngestRequest"
+                },
+                "type": "array",
+                "title": "Nodes"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchIngestResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/query": {
+      "post": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Query RemMe (embed \u2192 ANN \u2192 graph \u2192 score)",
+        "description": "Execute the full RemMe query pipeline.\n\nEmbeds the query text, runs ANN search in Qdrant, expands seed nodes\nvia Neo4j BFS, scores all candidates, and returns results above threshold.\nResults are scoped to the authenticated user's data only.\n\n- 200 on success (even if 0 results \u2014 check `total`)\n- 503 if the embedding model is unavailable",
+        "operationId": "query_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/node/{node_id}": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Fetch a single node by UUID",
+        "description": "Return the full property map for a single node.\n\nPulls from Neo4j (authoritative for node properties).\nReturns 404 if the node does not exist or belongs to another user.",
+        "operationId": "get_node_node__node_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "node_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Node Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Node Node  Node Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Delete a node from Neo4j and Qdrant",
+        "description": "Permanently delete a node. Removes from Neo4j (with all edges) and Qdrant.\n\nReturns 404 if the node does not exist or belongs to another user.",
+        "operationId": "delete_node_node__node_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "node_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Node Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Delete Node Node  Node Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/associations/{node_id}": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Fetch all associations for a node",
+        "description": "Return all nodes reachable from node_id within max_depth hops.\n\nPrunes edges with weight below min_edge_weight.\nScoped to the authenticated user \u2014 returns 404 for foreign nodes.\nReturns an empty associations list (not a 404) if the node has no edges.",
+        "operationId": "get_associations_associations__node_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "node_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Node Id"
+            }
+          },
+          {
+            "name": "max_depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 3,
+              "title": "Max Depth"
+            }
+          },
+          {
+            "name": "min_edge_weight",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 0.2,
+              "title": "Min Edge Weight"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Associations Associations  Node Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/export": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Export all user nodes as JSON",
+        "description": "Return all knowledge nodes for the authenticated user as a JSON array.",
+        "operationId": "export_data_export_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/chat": {
+      "post": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Chat with RemMe (intent-aware RAG)",
+        "description": "Send a message. RemMe parses intent, retrieves relevant nodes, and generates a response.\n\nIntent engine extracts: action (observe/suggest/draft/execute), entities, time range.\nUnsupported actions (execute) fall back to observe with a notification.\nSet debug_intent=true to see the full parsed intent in the response.",
+        "operationId": "chat_endpoint_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/chat/stream": {
+      "post": {
+        "tags": [
+          "chat"
+        ],
+        "summary": "Chat with RemMe \u2014 SSE streaming response",
+        "description": "Streaming variant of /chat. Returns text/event-stream SSE.\n\nEach event is a JSON object:\n  {\"token\": \"...\"}        \u2014 incremental text chunk\n  {\"done\": true, ...}     \u2014 final event with full metadata (session_id, action, etc.)\n  {\"error\": \"...\"}        \u2014 on failure",
+        "operationId": "chat_stream_endpoint_chat_stream_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/reinforce/{node_id}": {
+      "post": {
+        "tags": [
+          "decay"
+        ],
+        "summary": "Reinforce a node \u2014 reset decay, increment access count",
+        "description": "Explicit reinforcement signal for a node.\n\nResets last_accessed to now, increments access_count, recomputes decay_factor.\nUse this when the user explicitly interacts with a node outside of a query.\nQuery hits are reinforced automatically by the query pipeline.",
+        "operationId": "reinforce_reinforce__node_id__post",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "node_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Node Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Reinforce Reinforce  Node Id  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/decay/run": {
+      "post": {
+        "tags": [
+          "decay"
+        ],
+        "summary": "Manually trigger a decay pass (admin)",
+        "description": "Trigger a full decay pass immediately.\n\nNormally runs nightly via Celery beat. Use this to force a pass\nduring development or after bulk ingestion.",
+        "operationId": "trigger_decay_pass_decay_run_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Trigger Decay Pass Decay Run Post"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    },
+    "/conversations": {
+      "get": {
+        "tags": [
+          "conversations"
+        ],
+        "summary": "List Sessions",
+        "description": "List all conversation sessions for the current user, most recent first.\n\nAuto-generates meaningful titles for sessions with generic titles.",
+        "operationId": "list_sessions_conversations_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/conversations/{session_id}": {
+      "get": {
+        "tags": [
+          "conversations"
+        ],
+        "summary": "Get Session Messages",
+        "description": "Get all messages for a session. Enforces user ownership.",
+        "operationId": "get_session_messages_conversations__session_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionMessagesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "conversations"
+        ],
+        "summary": "Delete Session",
+        "description": "Delete a session. Enforces user ownership.",
+        "operationId": "delete_session_conversations__session_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conversations/smart/surface": {
+      "get": {
+        "tags": [
+          "conversations"
+        ],
+        "summary": "Get Smart Surface",
+        "description": "Get smart inference surface \u2014 what matters based on Canvas, emails, notes.\n\nReturns overdue actions, due soon, action items from notes, and people to follow up with.\nIncludes AI reasoning about priorities.",
+        "operationId": "get_smart_surface_conversations_smart_surface_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SmartSurfaceResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/discover": {
+      "post": {
+        "tags": [
+          "discover"
+        ],
+        "summary": "Run proactive association discovery for the current user",
+        "description": "Trigger the full association discovery pass for the authenticated user.\n\nThree strategies run in sequence:\n  - Semantic: Qdrant recommend API \u2192 SIMILAR_TO edges\n  - Tag:      Jaccard similarity   \u2192 TAGGED_TOGETHER edges\n  - Reference: body text scan      \u2192 REFERENCES edges\n\nAll edges are idempotent (UUID5 IDs) \u2014 safe to call repeatedly.\nReturns a summary of edges created across all strategies.",
+        "operationId": "discover_discover_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Discover Discover Post"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/outlook/connect": {
+      "get": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Outlook Connect",
+        "operationId": "outlook_connect_integrations_outlook_connect_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/outlook/callback": {
+      "get": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Outlook Callback",
+        "operationId": "outlook_callback_integrations_outlook_callback_get",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Code"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          },
+          {
+            "name": "error",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Error"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/outlook/status": {
+      "get": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Outlook Status",
+        "operationId": "outlook_status_integrations_outlook_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/outlook/sync": {
+      "post": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Outlook Sync",
+        "operationId": "outlook_sync_integrations_outlook_sync_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/canvas/connect": {
+      "post": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Canvas Connect",
+        "operationId": "canvas_connect_integrations_canvas_connect_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CanvasConnectRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/canvas/status": {
+      "get": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Canvas Status",
+        "operationId": "canvas_status_integrations_canvas_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/canvas/validate": {
+      "post": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Canvas Validate",
+        "description": "Test if the Canvas connection is valid by making a simple API call.",
+        "operationId": "canvas_validate_integrations_canvas_validate_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/canvas/sync": {
+      "post": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Canvas Sync",
+        "operationId": "canvas_sync_integrations_canvas_sync_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/outlook/import-pst": {
+      "post": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Outlook Import Pst",
+        "description": "Accept a .pst archive and stream ingestion progress back as NDJSON.",
+        "operationId": "outlook_import_pst_integrations_outlook_import_pst_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_outlook_import_pst_integrations_outlook_import_pst_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/outlook": {
+      "delete": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Outlook Disconnect",
+        "operationId": "outlook_disconnect_integrations_outlook_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/canvas": {
+      "delete": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Canvas Disconnect",
+        "operationId": "canvas_disconnect_integrations_canvas_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/outlook/push": {
+      "post": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Outlook Push Event",
+        "operationId": "outlook_push_event_integrations_outlook_push_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventPushRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/google/connect": {
+      "get": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Google Connect",
+        "operationId": "google_connect_integrations_google_connect_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/google/callback": {
+      "get": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Google Callback",
+        "operationId": "google_callback_integrations_google_callback_get",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Code"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          },
+          {
+            "name": "error",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Error"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/google/status": {
+      "get": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Google Status",
+        "operationId": "google_status_integrations_google_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/google/sync": {
+      "post": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Google Sync",
+        "operationId": "google_sync_integrations_google_sync_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/integrations/google": {
+      "delete": {
+        "tags": [
+          "integrations"
+        ],
+        "summary": "Google Disconnect",
+        "operationId": "google_disconnect_integrations_google_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/surface/daily": {
+      "post": {
+        "tags": [
+          "surface"
+        ],
+        "summary": "Surface most relevant nodes for a given date (3-5 items)",
+        "operationId": "daily_surface_surface_daily_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "top_k",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 10,
+              "minimum": 1,
+              "default": 5,
+              "title": "Top K"
+            }
+          },
+          {
+            "name": "for_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "YYYY-MM-DD \u2014 defaults to today",
+              "title": "For Date"
+            },
+            "description": "YYYY-MM-DD \u2014 defaults to today"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Daily Surface Surface Daily Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lecture/transcribe": {
+      "post": {
+        "tags": [
+          "lecture"
+        ],
+        "summary": "Lecture Transcribe",
+        "description": "Accept an audio/video file. Stream back NDJSON progress events.\nFinal event: { complete, summary, transcript, nodes_created, word_count }",
+        "operationId": "lecture_transcribe_lecture_transcribe_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_lecture_transcribe_lecture_transcribe_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/lecture/session": {
+      "post": {
+        "tags": [
+          "lecture"
+        ],
+        "summary": "Start Session",
+        "description": "Start a new live lecture session. Returns session_id.",
+        "operationId": "start_session_lecture_session_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartSessionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/lecture/session/{session_id}/chunk": {
+      "post": {
+        "tags": [
+          "lecture"
+        ],
+        "summary": "Submit Chunk",
+        "description": "Submit a ~15-second audio chunk for the running session.\nReturns: { transcript_text, word_count, summary? }\nsummary is included when rolling summary was triggered.",
+        "operationId": "submit_chunk_lecture_session__session_id__chunk_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_submit_chunk_lecture_session__session_id__chunk_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lecture/session/{session_id}/end": {
+      "post": {
+        "tags": [
+          "lecture"
+        ],
+        "summary": "End Session",
+        "description": "Finalize the session: generate comprehensive summary, chunk and ingest transcript.\nReturns: { nodes_created, summary, word_count, chunks }",
+        "operationId": "end_session_lecture_session__session_id__end_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lecture/session/{session_id}/summary": {
+      "get": {
+        "tags": [
+          "lecture"
+        ],
+        "summary": "Get Summary",
+        "description": "Get the current rolling summary for an active session.",
+        "operationId": "get_summary_lecture_session__session_id__summary_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AsyncIngestResponse": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "queued"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id"
+        ],
+        "title": "AsyncIngestResponse"
+      },
+      "BatchIngestResponse": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "title": "Task Id"
+          },
+          "queued": {
+            "type": "integer",
+            "title": "Queued"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "queued"
+          }
+        },
+        "type": "object",
+        "required": [
+          "task_id",
+          "queued"
+        ],
+        "title": "BatchIngestResponse"
+      },
+      "Body_lecture_transcribe_lecture_transcribe_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "course": {
+            "type": "string",
+            "title": "Course",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_lecture_transcribe_lecture_transcribe_post"
+      },
+      "Body_outlook_import_pst_integrations_outlook_import_pst_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_outlook_import_pst_integrations_outlook_import_pst_post"
+      },
+      "Body_submit_chunk_lecture_session__session_id__chunk_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "course": {
+            "type": "string",
+            "title": "Course",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_submit_chunk_lecture_session__session_id__chunk_post"
+      },
+      "CanvasConnectRequest": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "token",
+          "url"
+        ],
+        "title": "CanvasConnectRequest"
+      },
+      "ChangePasswordRequest": {
+        "properties": {
+          "current_password": {
+            "type": "string",
+            "title": "Current Password"
+          },
+          "new_password": {
+            "type": "string",
+            "minLength": 8,
+            "title": "New Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "current_password",
+          "new_password"
+        ],
+        "title": "ChangePasswordRequest"
+      },
+      "ChatRequest": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Message"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id",
+            "description": "Existing session ID \u2014 creates new if omitted"
+          },
+          "top_k": {
+            "type": "integer",
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Top K",
+            "default": 10
+          },
+          "threshold": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Threshold",
+            "default": 0.35
+          },
+          "debug_intent": {
+            "type": "boolean",
+            "title": "Debug Intent",
+            "description": "Include parsed intent in response",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "ChatRequest",
+        "description": "Inbound chat request \u2014 extended with intent controls."
+      },
+      "ChatResponse": {
+        "properties": {
+          "reply": {
+            "type": "string",
+            "title": "Reply"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "action": {
+            "type": "string",
+            "title": "Action"
+          },
+          "capability_gap": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capability Gap"
+          },
+          "context_nodes": {
+            "type": "integer",
+            "title": "Context Nodes"
+          },
+          "entities_found": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Entities Found"
+          },
+          "embed_ms": {
+            "type": "number",
+            "title": "Embed Ms"
+          },
+          "search_ms": {
+            "type": "number",
+            "title": "Search Ms"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model"
+          },
+          "intent": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Intent"
+          },
+          "calendar_proposal": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Calendar Proposal"
+          },
+          "sync_result": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sync Result"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reply",
+          "session_id",
+          "action",
+          "context_nodes",
+          "entities_found",
+          "embed_ms",
+          "search_ms",
+          "model"
+        ],
+        "title": "ChatResponse",
+        "description": "Full chat response including intent metadata."
+      },
+      "ConversationMessage": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "content": {
+            "type": "string",
+            "title": "Content"
+          },
+          "meta": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Meta"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "session_id",
+          "role",
+          "content",
+          "created_at"
+        ],
+        "title": "ConversationMessage"
+      },
+      "ConversationSession": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "ConversationSession"
+      },
+      "CoreModule": {
+        "type": "string",
+        "enum": [
+          "School",
+          "Work",
+          "Social",
+          "Finance",
+          "Projects",
+          "Personal",
+          "Archive"
+        ],
+        "title": "CoreModule"
+      },
+      "EventPushRequest": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "start": {
+            "type": "string",
+            "title": "Start"
+          },
+          "end": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End"
+          },
+          "body": {
+            "type": "string",
+            "title": "Body",
+            "default": ""
+          },
+          "timezone": {
+            "type": "string",
+            "title": "Timezone",
+            "default": "UTC"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "label",
+          "start"
+        ],
+        "title": "EventPushRequest"
+      },
+      "ForgotPasswordRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "title": "ForgotPasswordRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "qdrant": {
+            "type": "boolean",
+            "title": "Qdrant"
+          },
+          "neo4j": {
+            "type": "boolean",
+            "title": "Neo4J"
+          },
+          "postgres": {
+            "type": "boolean",
+            "title": "Postgres"
+          },
+          "ollama": {
+            "type": "boolean",
+            "title": "Ollama"
+          },
+          "inference_fallback": {
+            "type": "boolean",
+            "title": "Inference Fallback"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "qdrant",
+          "neo4j",
+          "postgres",
+          "ollama",
+          "inference_fallback"
+        ],
+        "title": "HealthResponse"
+      },
+      "IngestResponse": {
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "title": "Node Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "type": {
+            "$ref": "#/components/schemas/NodeType"
+          },
+          "embedded": {
+            "type": "boolean",
+            "title": "Embedded"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "ingested"
+          }
+        },
+        "type": "object",
+        "required": [
+          "node_id",
+          "label",
+          "type",
+          "embedded",
+          "created_at"
+        ],
+        "title": "IngestResponse"
+      },
+      "LoginRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "LoginRequest"
+      },
+      "NodeIngestRequest": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/NodeType"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Label",
+            "description": "Short display name"
+          },
+          "body": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Body",
+            "description": "Full text content \u2014 this gets embedded"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceType"
+          },
+          "core_module": {
+            "$ref": "#/components/schemas/CoreModule"
+          },
+          "source_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id",
+            "description": "Original ID in the source system"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "label",
+          "body",
+          "source",
+          "core_module"
+        ],
+        "title": "NodeIngestRequest",
+        "description": "Payload accepted by POST /ingest. RemMe assigns id, timestamps, decay."
+      },
+      "NodeType": {
+        "type": "string",
+        "enum": [
+          "Person",
+          "Project",
+          "Concept",
+          "Place",
+          "Event",
+          "Task",
+          "Note",
+          "Archive",
+          "Announcement",
+          "Module"
+        ],
+        "title": "NodeType"
+      },
+      "QueryRequest": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Text",
+            "description": "Natural language query text"
+          },
+          "top_k": {
+            "type": "integer",
+            "maximum": 500.0,
+            "minimum": 1.0,
+            "title": "Top K",
+            "description": "ANN search candidate pool size",
+            "default": 20
+          },
+          "threshold": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Threshold",
+            "description": "Minimum confidence score to include in results",
+            "default": 0.65
+          },
+          "max_graph_depth": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 0.0,
+            "title": "Max Graph Depth",
+            "description": "BFS traversal depth from each seed node",
+            "default": 3
+          },
+          "min_edge_weight": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Min Edge Weight",
+            "description": "Prune graph edges below this weight",
+            "default": 0.2
+          },
+          "core_module": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CoreModule"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional: filter results to a specific module"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "QueryRequest",
+        "description": "Inbound query payload."
+      },
+      "QueryResponse": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "title": "Query"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/ScoredNode"
+            },
+            "type": "array",
+            "title": "Results"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total",
+            "description": "Number of results after threshold filter"
+          },
+          "embed_ms": {
+            "type": "number",
+            "title": "Embed Ms",
+            "description": "Embedding latency in milliseconds"
+          },
+          "search_ms": {
+            "type": "number",
+            "title": "Search Ms",
+            "description": "Total search + score latency in milliseconds"
+          }
+        },
+        "type": "object",
+        "required": [
+          "query",
+          "results",
+          "total",
+          "embed_ms",
+          "search_ms"
+        ],
+        "title": "QueryResponse",
+        "description": "Envelope returned by POST /query."
+      },
+      "RegisterRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "title": "Password",
+            "description": "Minimum 8 characters"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password",
+          "name"
+        ],
+        "title": "RegisterRequest"
+      },
+      "ResetPasswordRequest": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "token",
+          "password"
+        ],
+        "title": "ResetPasswordRequest"
+      },
+      "ScoredNode": {
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "title": "Node Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "type": {
+            "$ref": "#/components/schemas/NodeType"
+          },
+          "body": {
+            "type": "string",
+            "title": "Body"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "core_module": {
+            "$ref": "#/components/schemas/CoreModule"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metadata"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score",
+            "description": "Final confidence score (0\u20131)"
+          },
+          "sim": {
+            "type": "number",
+            "title": "Sim",
+            "description": "Cosine similarity from ANN search (0 if graph-only result)"
+          },
+          "graph_dist": {
+            "type": "integer",
+            "title": "Graph Dist",
+            "description": "Hops from nearest ANN seed node (-1 if not graph-expanded)"
+          },
+          "decay_factor": {
+            "type": "number",
+            "title": "Decay Factor",
+            "description": "Temporal decay weight at query time"
+          },
+          "access_count": {
+            "type": "integer",
+            "title": "Access Count",
+            "description": "Number of times this node has been accessed"
+          },
+          "is_seed": {
+            "type": "boolean",
+            "title": "Is Seed",
+            "description": "True if returned directly by ANN search"
+          }
+        },
+        "type": "object",
+        "required": [
+          "node_id",
+          "label",
+          "type",
+          "body",
+          "source",
+          "core_module",
+          "tags",
+          "metadata",
+          "score",
+          "sim",
+          "graph_dist",
+          "decay_factor",
+          "access_count",
+          "is_seed"
+        ],
+        "title": "ScoredNode",
+        "description": "A single query result with scoring breakdown."
+      },
+      "SessionListResponse": {
+        "properties": {
+          "sessions": {
+            "items": {
+              "$ref": "#/components/schemas/ConversationSession"
+            },
+            "type": "array",
+            "title": "Sessions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sessions"
+        ],
+        "title": "SessionListResponse"
+      },
+      "SessionMessagesResponse": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/ConversationMessage"
+            },
+            "type": "array",
+            "title": "Messages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id",
+          "messages"
+        ],
+        "title": "SessionMessagesResponse"
+      },
+      "SmartSurfaceResponse": {
+        "properties": {
+          "overdue_actions": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Overdue Actions"
+          },
+          "due_soon": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Due Soon"
+          },
+          "action_items": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Action Items"
+          },
+          "people_to_followup": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "People To Followup"
+          },
+          "reasoning": {
+            "type": "string",
+            "title": "Reasoning"
+          }
+        },
+        "type": "object",
+        "required": [
+          "overdue_actions",
+          "due_soon",
+          "action_items",
+          "people_to_followup",
+          "reasoning"
+        ],
+        "title": "SmartSurfaceResponse"
+      },
+      "SourceType": {
+        "type": "string",
+        "enum": [
+          "calendar",
+          "email",
+          "voice",
+          "academic",
+          "manual",
+          "behavioral"
+        ],
+        "title": "SourceType"
+      },
+      "StartSessionRequest": {
+        "properties": {
+          "course": {
+            "type": "string",
+            "title": "Course",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "StartSessionRequest"
+      },
+      "TokenResponse": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserOut"
+          }
+        },
+        "type": "object",
+        "required": [
+          "access_token",
+          "user"
+        ],
+        "title": "TokenResponse"
+      },
+      "UserOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "onboarding_complete": {
+            "type": "boolean",
+            "title": "Onboarding Complete"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "title": "Is Admin",
+            "default": false
+          },
+          "is_verified": {
+            "type": "boolean",
+            "title": "Is Verified",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "name",
+          "onboarding_complete"
+        ],
+        "title": "UserOut"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VerifyEmailRequest": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code"
+        ],
+        "title": "VerifyEmailRequest"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  }
+}

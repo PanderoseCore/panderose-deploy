@@ -6,9 +6,12 @@ here should be hand-edited long-term — it should be overwritten by CI from
 the source-of-truth service.
 
 - `specs/public/*.json` → rendered into the **public** docs instance
-  (`content/public/api`), for anything we publish externally.
+  (`content/public/api`), for anything we publish externally. Currently a
+  placeholder (`example.json`) — no service has a public API yet.
 - `specs/internal/*.json` → rendered into the **internal** docs instance
-  (`content/internal/api`), for internal-only services (e.g. `cambium`).
+  (`content/internal/api`), for internal-only services. `remme.json` is
+  the first real one, generated directly from RemMe's live
+  `app.openapi()` — see [RemMe — internal](/internal/systems/remme).
 
 ## What each FastAPI service repo should do
 
