@@ -64,6 +64,19 @@ deleted), just excluded from this build.
 including invited employees, until the real fix ships. That's the
 correct tradeoff — no internal docs beats leaked internal docs.
 
+## Regression prevention (shipped)
+
+Manually verifying this once with `curl` proves the state at that
+moment, not the next commit. `docs-src/scripts/check-no-internal-leak.sh`
+automates the check permanently: it extracts every internal page's title
+automatically (no manual list to maintain) and fails the build — wired
+into `.github/workflows/build-docs.yml` as a required, blocking step — if
+any of that content is reachable in the public build output. This is
+what actually prevents this specific incident from recurring silently;
+see [Security Review Checklist](../security-review-checklist) for the
+general standard this incident produced, applying beyond just this one
+script.
+
 ## Real fix (not yet built)
 
 Internal docs need their own **physically isolated build and
