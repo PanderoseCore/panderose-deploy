@@ -1,5 +1,12 @@
 # docs-src — developer docs source
 
+**Read [`PLATFORM-REVIEW.md`](./PLATFORM-REVIEW.md) before making any
+architecture or access-control change here** — it's the audit of every
+decision behind this system after a real incident (internal content
+leaked, unauthenticated; see ADR 0006) and the standard this system is
+now held to. Internal docs are currently disabled by design (§5 of that
+review) — do not re-enable them without following its roadmap.
+
 The Docusaurus **source** for panderose.com/docs. It builds to `../docs`
 (repo root) — that's **generated, committed** static output, never
 hand-edited. See

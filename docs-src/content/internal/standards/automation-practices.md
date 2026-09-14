@@ -5,13 +5,10 @@ title: Automation & Tooling Practices
 
 # Automation & Tooling Practices
 
-Reusable engineering technique, generalized out of real automation work.
-Deliberately excludes client identity, incident specifics, vendor names,
-dates, dollar amounts, credentials, and infrastructure identifiers — none
-of that appears below, and none of it should be inferred from what does.
-Where a technique couldn't be described without the description itself
-pointing back at who or what it was built for, it was left out rather
-than generalized (see "Left out" at the end).
+Reusable patterns for unattended automation and internal tooling at
+Panderose — the practices behind reliable scheduled jobs, safe
+communication scripts, and credential handling for anything that runs
+without a person watching it.
 
 ## 1. Dry-run-by-default for anything that sends real communication
 
@@ -159,26 +156,3 @@ that payload, or in the rendered content itself (a missing placeholder
 substitution won't show up in a variables list) — at least one real,
 careful live execution earns its cost before trusting an automated pipeline
 that talks to an external service.
-
----
-
-## Left out
-
-The following exist in the source material this page was drawn from but
-are not included above because a generalized description would still
-amount to a specific, identifiable account of what was investigated, for
-whom, and what was found — left out rather than thinly disguised, per the
-[classification policy](./classification):
-
-- The exact multi-service architecture connecting a specific mail/directory
-  platform's read-only audit scan to a specific rendering-and-delivery
-  pipeline, insofar as describing it accurately requires naming the checks
-  being run and the categories of finding they produce for one particular
-  account.
-- A third party's own internal working files for a specific business
-  arrangement (extraction prompts, a Python extraction script, task
-  instructions) — not Panderose tooling, and out of scope for "internal
-  engineering practice" regardless of classification. One operationally
-  urgent fact from that material (a live, unrotated credential) has been
-  flagged separately, outside this docs site, rather than written up here
-  as technique.

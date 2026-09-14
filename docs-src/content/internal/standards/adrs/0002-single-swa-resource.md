@@ -5,9 +5,16 @@ title: "ADR 0002 — Single Azure Static Web Apps resource"
 
 # ADR 0002 — Single Azure Static Web Apps resource vs. a second one for docs
 
-**Status:** Accepted (superseded an earlier dev.panderose.com-as-a-second-resource
-plan, and was itself revised once the real deploy pipeline was confirmed —
-see the history note at the bottom)
+**Status:** Partially superseded by [ADR 0006](./shared-bundle-leak) — the
+single-build-for-public-and-internal part of this decision caused the
+internal content leak that ADR 0006 describes, and is pending a
+replacement ADR once the isolated internal-docs architecture from
+[`PLATFORM-REVIEW.md`](../../../../PLATFORM-REVIEW.md) §5 is designed.
+The single-*resource* decision (as opposed to single-*build*) may still
+stand; see that review before assuming either way. (Also superseded an
+earlier dev.panderose.com-as-a-second-resource plan, and was itself
+revised once the real deploy pipeline was confirmed — see the history
+note at the bottom.)
 
 ## Context
 
