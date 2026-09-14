@@ -14,6 +14,11 @@ any reference page** — no meta-commentary about how a page was produced,
 no narration of what was redacted or why, no conversational address to
 the reader. Reference pages document systems, not their own creation.
 
+**Read [Security Review Checklist — Access-Controlled Content](./security-review-checklist)
+before shipping anything that restricts access to anything** — mandatory,
+not a suggestion, after a real incident ([ADR 0006](./adrs/shared-bundle-leak))
+where content described as gated was fully readable, unauthenticated.
+
 See [Architecture Decision Records](./adrs) for the trade studies behind
 this docs site's own design (platform choice, hosting architecture,
 access control), and [Automation & Tooling Practices](./automation-practices)
