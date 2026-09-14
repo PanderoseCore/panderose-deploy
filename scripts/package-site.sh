@@ -19,6 +19,9 @@ rm -rf docs
 mkdir -p docs
 cp -r docs-src/build/. docs/
 
+echo "==> Verifying no internal content leaked into the public build"
+./docs-src/scripts/check-no-internal-leak.sh
+
 echo "==> Done. docs/ now matches docs-src/. Diff it before committing:"
 echo "    git status docs"
 echo "    git diff --stat docs"

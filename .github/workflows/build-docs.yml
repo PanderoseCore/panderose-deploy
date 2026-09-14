@@ -57,6 +57,16 @@ jobs:
           mkdir -p docs
           cp -r docs-src/build/. docs/
 
+      # Required, blocking check — fails the job (and therefore blocks the
+      # commit-to-main step below, and blocks this PR's merge) if any
+      # internal content is reachable in the public build output. Exists
+      # because of a real incident (ADR 0006): internal docs were fully
+      # readable, unauthenticated, via the shared JS bundle. Never bypass
+      # or remove this step without building the isolated-deployment fix
+      # ADR 0006 describes first.
+      - name: Verify no internal content leaked into the public build
+        run: ./docs-src/scripts/check-no-internal-leak.sh
+
       - name: Commit built docs/ if it changed
         if: github.event_name == 'push'
         run: |
