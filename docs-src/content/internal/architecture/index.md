@@ -83,8 +83,8 @@ dev pushes to panderose-deploy (this repo), main branch
 someone with approval authority reviews/approves
         │
         ▼
-panderose-deploy main is synced into Panderose/panderose-site main
-   (mechanism not fully confirmed from this repo — see note below)
+panderose-deploy main is manually synced into Panderose/panderose-site
+   main (a person pushes; see note below)
         │
         ▼
 panderose-site's own Azure-connected GitHub Actions workflow
@@ -96,14 +96,17 @@ Panderose_group) — the same resource for both panderose.com and
 panderose.com/docs (see ADR 0002)
 ```
 
-**Open item:** the exact panderose-deploy → panderose-site sync mechanism
-isn't confirmed — a GitHub Actions run in `panderose-site` shows commits
-pushed by an actor/service account named `PanderoseCore`, which points at
-some automation outside this repo's visibility, not a workflow file
-committed here. Whoever owns that sync should document it here once
-confirmed. Because it's unconfirmed whether that sync runs a build step,
+The panderose-deploy → panderose-site sync is a manual push by a person
+with access to both repositories, committed with the message "Sync from
+panderose-deploy main." `panderose-site` has no automated pipeline step
+pulling from `panderose-deploy`, no webhook, and no stored credential for
+it — none is needed, since `panderose-deploy` is a public repository.
+Once pushed, Azure's own native GitHub Actions integration on
+`panderose-site` picks up the change and deploys it; that step is
+existing Azure tooling, not authored in this repository. Because the
+sync itself is a manual push rather than a build pipeline,
 `panderose-deploy` builds `docs-src/` itself and commits static output to
-`docs/` (ADR 0003) rather than assuming the far side will.
+`docs/` (ADR 0003) rather than assuming the far side will build it.
 
 ### DNS / hosting
 
