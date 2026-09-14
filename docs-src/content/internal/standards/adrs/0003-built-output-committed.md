@@ -10,12 +10,15 @@ title: "ADR 0003 — Committing built docs output"
 ## Context
 
 `panderose-deploy` is the dev/working repo. Changes to its `main` branch
-reach the Azure-connected repo, `Panderose/panderose-site`, through an
-approval-gated sync (push to `panderose-deploy` main → review/approval →
-synced into `panderose-site` main → Azure's existing workflow there
-deploys it). As of writing, it's **not confirmed** whether that sync
-process runs any build step, or just copies files as-is — and this repo
-has no visibility into `panderose-site` or the sync mechanism to check.
+reach the Azure-connected repo, `Panderose/panderose-site`, through a
+manual push (confirmed: a person with access to both repositories pushes
+directly, no build step involved) → Azure's existing native workflow on
+`panderose-site` deploys it as-is. At the time this ADR was written, that
+sync process hadn't been confirmed and this repo had no visibility into
+`panderose-site` to check — see
+[PLATFORM-REVIEW.md §3](https://github.com/PanderoseCore/panderose-deploy/tree/main/docs-src/PLATFORM-REVIEW.md)
+for how it was later confirmed. The reasoning below held regardless of
+that uncertainty and still holds now that it's resolved.
 
 The rest of this property (the marketing site) has always assumed **no
 build step on the serving side** — plain HTML/CSS, copied as-is. The docs
@@ -42,8 +45,11 @@ it, edit `docs-src/` and let the workflow (or
 
 - `docs/` shows up as a normal (large, mostly-binary/minified) diff on
   every docs content change — expected, not a mistake.
-- If/when it's confirmed that the sync or `panderose-site` does run its
-  own build step, this ADR should be revisited — committing build output
-  becomes pure redundancy at that point, though still not harmful.
+- Confirmed: the sync is a manual push with no build step, so committing
+  build output here is doing real work, not redundant. If the manual sync
+  is later formalized into a real CI/CD pipeline (see PLATFORM-REVIEW.md
+  §5), that new pipeline's design should state explicitly whether it
+  builds `docs-src/` itself — if it does, this ADR should be revisited at
+  that point, since committing build output becomes pure redundancy.
 - The bot commit uses `[skip ci]` in its message and the workflow only
   triggers on `docs-src/**` changes, so it doesn't loop on itself.

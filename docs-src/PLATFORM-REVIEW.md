@@ -88,29 +88,49 @@ Azure Static Web Apps origin ("Panderose" resource)
 Static build artifact
    │  — committed to panderose-deploy main by build-docs.yml (ADR 0003)
    ▼
-??? — UNCONFIRMED SYNC MECHANISM ???
-   │  — an actor/account named "PanderoseCore" pushes panderose-deploy's
-   │    main into Panderose/panderose-site; the actual trigger (manual?
-   │    scheduled? webhook? who/what has credentials to do this?) has
-   │    never been identified, despite being flagged as an open item
-   │    since content/internal/architecture/index.md was first written.
+MANUAL SYNC — RESOLVED (see below)
+   │  — a person (jhockersmith) manually copies panderose-deploy's main
+   │    into Panderose/panderose-site, one push per sync, each committed
+   │    with the message "Sync from panderose-deploy main."
    ▼
 Panderose/panderose-site main
-   │  — Azure's own GitHub Actions workflow (not authored in this repo)
+   │  — Azure's own native GitHub Actions workflow (not authored in this
+   │    repo; auto-generated when the Static Web App resource was linked
+   │    to panderose-site) watches this branch directly and deploys.
    ▼
 Same Azure Static Web Apps origin, live
 ```
 
-**This is a real, standing gap, independent of the docs leak**: a
-production deployment pipeline has an unidentified actor with push
-access to a production-serving repository, and nobody currently
-overseeing this docs platform can name what it is or who controls it.
-In any real enterprise/gov environment this alone would block a security
-sign-off — you cannot authorize a system whose deployment mechanism you
-cannot name. **This needs to be resolved before any further
-access-control work on internal docs is worth doing** — a perfectly
-isolated internal-docs build still ships through a pipeline step nobody
-can audit.
+**Resolved 2026-09-14.** Verified directly against `panderose-site`'s own
+GitHub Actions run history and workflow files (org-level Webhooks: none;
+org-level Deploy keys: disabled by org policy; repo-level Webhooks: none;
+repo Actions secrets: only the Azure SWA deployment token, no
+cross-repo credential): there is no automated pipeline step, hidden
+actor, or unaudited credential. The `panderose-deploy` → `panderose-site`
+transfer is a person manually pushing (every sync commit in the run
+history but one is `pushed by jhockersmith`), which `panderose-site`
+accepts because `panderose-deploy` is a public repo — no cross-repo
+credential is needed to pull from it, so none exists.
+
+The "PanderoseCore" actor that appeared as the pusher on exactly one
+commit (`ci: add Azure Static Web Apps workflow file`, the repo's
+second-ever commit) is not a hidden or compromised identity — it
+resolves to the `PanderoseCore` GitHub **organization account itself**
+(the same org that owns `panderose-deploy`), shown as a member of the
+`Panderose` org. This is consistent with Azure's Static Web App setup
+flow auto-committing its own CI/CD workflow file at resource-creation
+time, attributed to whatever GitHub identity/org context was active in
+that session.
+
+**What this changes**: the deployment mechanism is now nameable and
+auditable — it is a human action, not a mystery pipeline step — so the
+blocking condition on further internal-docs work is lifted. It does not
+mean the mechanism is *good enough to build on as-is*: a manual,
+undocumented-until-now push with no review step and no record of who
+pushed what, when, is exactly the kind of process gap §5's roadmap
+already calls for fixing (a real, reviewable CI/CD pipeline, or at
+minimum a documented, single-owner runbook) before it becomes the
+delivery path for anything access-controlled.
 
 ## 4. ADR-by-ADR audit
 
@@ -118,7 +138,7 @@ can audit.
 |---|---|---|
 | 0001 | Docusaurus as the platform | Sound, low-risk, stands. Real trade study, real alternatives considered. |
 | 0002 | One Azure resource/build for public+internal | **Effectively superseded by the ADR 0006 incident**, not just "revisit if a reason shows up" — the reason showed up. Should be formally marked superseded once the isolated build (§5) exists, not left saying "revisit." |
-| 0003 | Commit built output vs. downstream build | Still reasonable given the unconfirmed sync mechanism (§3) — but that same unconfirmed mechanism is itself the bigger problem this ADR works around rather than resolves. |
+| 0003 | Commit built output vs. downstream build | Still reasonable now that the sync mechanism is confirmed (§3) to be a manual push of this repo's own committed output — the rationale holds regardless of whether that push is later formalized into real CI/CD. |
 | 0004 | Azure `employee` role, invite-only | Sound mechanism. **Gap**: no offboarding process (what happens when someone leaves?), no periodic access recertification, and it was verified directly against **production** — no staging/preview environment was used to test an access-control change before it took effect on the live public site. |
 | 0005 | Cloudflare Access + hardware-key MFA | Sound design. **Sequencing failure**: built and partially deployed before §3's hosting-boundary problem was known, let alone resolved — real infrastructure layered onto a foundation that hadn't been verified end-to-end yet. |
 | 0006 | Leak found, internal disabled, CI leak-check added | Correct reactive fix, defense-in-depth of the future is well handled. **What it can't fix**: it's still a reactive discovery — the checklist it produced (`security-review-checklist.md`) is what should have gated 0004/0005 *before* they shipped, not after. |
@@ -129,11 +149,12 @@ can audit.
 beats full and leaking, and there is no deadline pressure that changes
 that trade.
 
-1. **Resolve the sync mechanism (§3).** Identify what/who pushes
-   `panderose-deploy` → `panderose-site`, and put a real, nameable,
-   auditable process in its place (a documented person's action, or a
-   real CI/CD pipeline this repo can see — not an unidentified actor).
-   Nothing past this point is worth doing while this stays unknown.
+1. ~~Resolve the sync mechanism (§3).~~ **Done — see §3.** The mechanism
+   is a manual push by a named person, not a hidden actor. Formalizing
+   it into a real, reviewable CI/CD pipeline (rather than leaving it a
+   manual, unlogged action) is folded into step 3 below, since it's part
+   of the same "design the real pipeline" work as the isolated-build
+   architecture, not a separate blocking prerequisite anymore.
 2. **Baseline hygiene this project currently lacks**, regardless of
    internal docs:
    - Dependency vulnerability scanning in CI (Dependabot or equivalent —
@@ -147,7 +168,12 @@ that trade.
    document first, reviewed before any code is written** — not another
    fast build. Pick one model explicitly (a genuinely separate build/
    deployment with its own asset namespace — see ADR 0006's options) and
-   write the ADR that supersedes 0002 *before* implementing it.
+   write the ADR that supersedes 0002 *before* implementing it. Include
+   in that design whether the `panderose-deploy` → `panderose-site`
+   transfer stays a documented manual step or becomes a real CI/CD
+   pipeline — either is legitimate, but it should be a stated choice in
+   the new ADR, not left as an implicit, unlogged action the way it's
+   existed until now.
 4. **Re-enable internal docs against that new architecture**, gated
    through:
    - The existing `check-no-internal-leak.sh` CI gate (already in place,
