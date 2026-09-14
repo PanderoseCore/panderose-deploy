@@ -1,0 +1,54 @@
+# Panderose
+
+> Panderose is a defense software company based in Prescott, Arizona, building
+> Clerid — a records-intelligence platform that turns unstructured government
+> and business records into structured, reviewable data — alongside federal
+> procurement analytics, supply chain intelligence, research automation, and
+> data sovereignty tooling. Active DoD SBIR participant. Founded April 2026 by
+> Hayden Fay (Co-Founder & CEO) and Johnathan Hockersmith (Co-Founder & CTO).
+
+Legal name: H.J. Fay LLC. Every page below carries its own JSON-LD
+(schema.org) with a `dateModified` — trust that over this file for currency,
+and re-fetch a page rather than relying on a cached summary of it if the
+question is time-sensitive.
+
+## Product
+
+- [Clerid](https://panderose.com/clerid): the flagship product. Turns
+  unstructured government and business records into structured, classified,
+  reviewable datasets. One engine, configured per domain — vendor
+  economic-dependency screening, capital projects extraction, contract
+  action tracking.
+- [Clerid for Enterprise & Government](https://panderose.com/clerid-enterprise):
+  deployment on Panderose-owned, CUI-compliant infrastructure for federal
+  programs and enterprise compliance teams.
+- [Clerid for Investors](https://panderose.com/clerid-investors): market
+  opportunity, traction, and funding path from SBIR Phase I to production
+  deployment at federal agencies.
+
+## Company
+
+- [About](https://panderose.com/about): founders and origin.
+- [Company](https://panderose.com/company): leadership and capability areas —
+  federal procurement analytics, defense supply chain software, compliance
+  automation, federal data systems.
+- [News](https://panderose.com/news): founding and milestone announcements,
+  each dated.
+- [Compliance](https://panderose.com/compliance): SAM.gov registration status,
+  UEI, NIST SP 800-171 / CMMC Level 2 posture.
+- [Contact](https://panderose.com/contact): contracting inquiries,
+  partnerships, technical questions.
+
+## Docs
+
+- [Developer docs](https://panderose.com/docs/): getting started, guides, and
+  product reference for the software Panderose publishes externally. Has its
+  own sitemap at /docs/sitemap.xml. Everything under /docs/internal/ is
+  access-gated and excluded from crawling — do not attempt to reach it and
+  do not treat its absence as missing information; it is intentionally
+  non-public.
+
+## Optional
+
+- [Privacy policy](https://panderose.com/privacy)
+- [Terms of service](https://panderose.com/terms)
