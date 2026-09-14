@@ -1,72 +1,46 @@
-# A public MCP server for panderose.com — scoping notes
+# A public MCP server for panderose.com
 
-Not built yet. This is the design sketch for a follow-up task, written so
-whoever (or whichever Claude session) picks it up next doesn't have to
-re-derive the reasoning.
+**Status: done, via Cloudflare AI Search — not custom-built.** This file
+originally scoped a from-scratch Worker for this; superseded once Cloudflare
+AI Search was set up on the account (see `CLOUDFLARE-SETUP.md`) and turned
+out to already provide it. Left in place as the record of what's live and
+why a custom build isn't needed on top of it.
 
-## Why this is a different thing from the crawler/SEO pass
+## What's live
 
-Everything else in this round (robots.txt, llms.txt, JSON-LD, Cloudflare's
-AI Crawl Control) makes the *existing static pages* cheaper and more
-reliable for an agent to read. An MCP server is a step further: instead of
-an agent inferring structured facts from prose, it calls a typed tool and
-gets a typed answer — no parsing, no risk of misreading a page, and it can
-serve data that doesn't have a good static-page shape (e.g. "is this the
-current UEI" as a single fact rather than a paragraph to re-read each time).
+- **Endpoint**: `https://search.panderose.com/mcp` — Streamable HTTP
+  transport, no auth (fine here: it only serves the same public content
+  already on the site).
+- **Tool**: `search(query)` — semantic/hybrid search over panderose.com's
+  pages. Verified working directly (`tools/list` and an `initialize` round
+  trip both returned correctly).
+- **How it stays current**: it's a Cloudflare AI Search instance with the
+  website connected as a data source — Cloudflare crawls and re-indexes the
+  live site itself, rather than reading a hand-maintained fact sheet. That's
+  better than the original plan here, which would have needed a second
+  source of truth kept in sync with the HTML by hand.
+- **Discoverability**: linked from `/llms.txt` under "For agents" so an
+  agent that reads that file first knows to call this instead of scraping
+  pages one at a time.
 
-Worth it once the static-content pass is live and you want the next
-increment; not a prerequisite for anything else in this round.
+## What the original plan proposed (for reference, not pursued)
 
-## Proposed tool surface
+A hand-written Cloudflare Worker exposing typed tools —
+`get_company_overview`, `get_clerid_overview`, `get_compliance_status`,
+`search_news`, `list_pages` — each backed by a small fact sheet kept in this
+repo. Cloudflare AI Search's single `search` tool over live-crawled content
+covers the same need with less to maintain: one index that tracks the site
+instead of five endpoints and a duplicate data file. Worth revisiting only
+if a specific structured query (e.g. "just the UEI, not a paragraph
+containing it") turns out to matter enough to justify typed tools on top of
+free-text search — no sign of that yet.
 
-Keep it read-only and scoped to what's already public on panderose.com —
-this is not a channel into anything gated:
+## One thing worth checking periodically
 
-- `get_company_overview()` — name, legal name, founding date/location,
-  founders, one-paragraph description. Mirrors the Organization JSON-LD
-  already on `index.html`.
-- `get_clerid_overview()` — product description, the three configured
-  domains (vendor screening, capital projects, contract tracking),
-  links to the enterprise/investor pages for more detail.
-- `get_compliance_status()` — SAM.gov status, UEI, NIST SP 800-171 / CMMC
-  posture, as published on `/compliance`. High-value for procurement-side
-  agents specifically screening vendors — this is close to the audience
-  Clerid itself serves.
-- `search_news(query?)` — returns the dated announcements from `/news`,
-  structured (headline, date, description) instead of scraped HTML.
-- `list_pages()` — a directory of every public URL with its title and
-  `dateModified`, i.e. `llms.txt` as a callable tool instead of a static
-  file, for a client that wants to decide what to fetch next itself.
-
-Each tool's response should cite the source page URL, so an agent surfacing
-this to a person can link back to panderose.com rather than presenting it as
-free-floating fact — same spirit as `Redirects for AI Training` canonicalizing
-crawler traffic back to the real page.
-
-## What it would take to build
-
-- Cloudflare Workers + the Agents SDK, per
-  `developers.cloudflare.com/agents/model-context-protocol/guides/remote-mcp-server/`
-  — Streamable HTTP transport, no auth needed since every tool only returns
-  already-public information.
-- Content source: either read the same static HTML/JSON-LD this repo already
-  serves (fetch + parse at request time, cached), or maintain a small
-  hand-written JSON/YAML fact sheet in this repo that both the MCP server and
-  the static pages pull from — the second avoids scraping your own site but
-  is a new single source of truth to keep in sync with the HTML. Worth a
-  decision before starting, not during.
-- Hosting: a Worker, deployed separately from the Azure static site — e.g.
-  `mcp.panderose.com`, its own Cloudflare DNS record. Independent of the
-  Azure/Cloudflare proxy work in `CLOUDFLARE-SETUP.md`.
-- No secrets, no write path, no user data — this stays clear of the SBIR/
-  background-IP boundary concerns that apply elsewhere in the Panderose
-  codebase (that boundary is a Clerid/cambium concern, not relevant to a
-  public marketing-site MCP server).
-
-## Not now
-
-Skipping for this round per your call — revisit once the crawler/SEO changes
-are live and you have a sense of whether AI-driven traffic to the static
-pages is showing up in Cloudflare's AI Crawl Control metrics. That data
-should inform whether an MCP server is worth the build, or whether the
-static pages plus `llms.txt` are already doing the job.
+The "Bot protection may block crawling" note in Cloudflare's own AI Search
+docs: if Bot Management, WAF, or Turnstile rules ever get added to this
+zone, they apply to AI Search's own crawler too and can silently stop it
+from re-indexing new pages. No such rules are in place as of this setup
+(only AI Crawl Control, which governs external bots, not Cloudflare's own
+AI Search crawler) — just something to recheck if the search tool ever
+starts returning stale results.

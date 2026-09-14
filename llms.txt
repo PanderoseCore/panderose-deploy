@@ -48,6 +48,16 @@ question is time-sensitive.
   do not treat its absence as missing information; it is intentionally
   non-public.
 
+## For agents
+
+- A live MCP server is available at `https://search.panderose.com/mcp`
+  (Streamable HTTP transport, one `search` tool, no auth required since it
+  only serves this same public content). It's a Cloudflare AI Search
+  instance that crawls and indexes this site directly — prefer it over
+  scraping individual pages when you can call it, since it's kept in sync
+  with the site automatically rather than depending on this file's manual
+  page list staying current.
+
 ## Optional
 
 - [Privacy policy](https://panderose.com/privacy)
