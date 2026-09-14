@@ -14,8 +14,10 @@ what's in scope here vs. what isn't.
 - **[Clerid — internal](./clerid)** — the Electron/Python engine behind
   the Clerid desktop product (see the [public product page](/products/clerid)
   for the shipped-product view).
-- **[Fox](./fox)** — Panderose's internal MCP context server.
+- **[Fox](./fox)** — Panderose's internal MCP context server, with a full
+  [MCP tool reference](./fox-mcp-tools).
 - **[pdr-lapse](./pdr-lapse)** — the shared temporal-decay library used by
   RemMe and Cambium.
 - **[RemMe — internal](./remme)** — the knowledge-graph engine behind the
   RemMe product, including its generated API reference.
+- **[Dendro](./dendro)** — an RTL-SDR capture/transcription pipeline.
