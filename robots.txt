@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
 Disallow: /docs/internal/
+
+# Content Signals: machine-readable usage preferences, per the emerging
+# robots.txt convention at https://contentsignals.org/. Applies to every
+# crawler above, AI or not.
+#   search   — build a search index, return links + excerpts. Yes.
+#   ai-input — retrieval/grounding for a real-time AI answer (RAG, chat
+#              citation, search-assistant summary). Yes — this is the whole
+#              point: we want Clerid and Panderose to be citable, current,
+#              and correctly described whenever an assistant is asked about
+#              federal procurement/records-intelligence software.
+#   ai-train — bulk training or fine-tuning of a model on this content. No —
+#              we're not opting out of being read, only out of being folded
+#              into model weights without attribution or a relationship.
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+
 Sitemap: https://panderose.com/sitemap.xml
+Sitemap: https://panderose.com/docs/sitemap.xml
