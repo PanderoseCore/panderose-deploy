@@ -176,6 +176,13 @@ whose central claim is auditable provenance cannot have an unauditable
 step in its own agent layer, so nothing about a model call is discarded
 after its parsed result is kept.
 
+## Demonstration scripts
+
+See [Demonstration scripts](./demo-scripts) — two scripts exercising the
+full decision-lifecycle engine end to end against real, cited historical
+case data, covering a point-in-time trade study and a multi-episode
+long-horizon decision program.
+
 ## Local development
 
 ```bash
