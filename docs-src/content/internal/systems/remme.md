@@ -10,10 +10,9 @@ title: "RemMe — internal"
 RemMe (remme.panderose.com) is Panderose's personal AI memory system,
 built for college students: it connects Canvas, Outlook, and a student's
 own notes into one intelligent knowledge layer that remembers coursework
-for them. The codebase behind this page is the self-hosted knowledge
-graph engine behind that product — semantic search, proactive association
-discovery, and LLM-assisted reasoning — not a finished consumer product on
-its own.
+for them. This repository is the self-hosted knowledge graph engine
+behind that product — semantic search, proactive association discovery,
+and LLM-assisted reasoning — not a finished consumer product on its own.
 
 The project was previously named Synapse; files, directory names, and some
 comments in the repository still reflect that name, but RemMe is the

@@ -25,10 +25,10 @@ The design goal is a graph that records not just what was chosen, but what
 was assumed, what was rejected, and whether the ground has since moved
 under a past decision.
 
-As of this writing the repository is pre-implementation: the type layer,
-storage, decay, and API modules exist as package scaffolding, and the
-architecture is specified in `docs/` and `plan/ROADMAP.md` before code is
-written against it. No API reference generates here yet — see
+The repository is pre-implementation: the type layer, storage, decay, and
+API modules exist as package scaffolding, and the architecture is
+specified in `docs/` and `plan/ROADMAP.md` before code is written against
+it. No API reference generates here yet — see
 [`specs/README.md`](https://github.com/PanderoseCore/panderose-deploy/tree/main/docs-src/specs)
 for how that lands automatically once one exists.
 
@@ -112,15 +112,3 @@ convenience, not a credential used anywhere else.
 - Cambium reuses two existing Panderose packages rather than
   reimplementing their logic: [`pdr-lapse`](/internal/systems/pdr-lapse)
   for temporal decay and `pdr-derive` (planned) for intent parsing.
-
-:::caution Scope of this page
-The repository also carries a separately tracked set of modules built
-under a federal research award, kept in strictly separate modules and
-commits from the background-IP core described above. Contract- or
-program-specific analysis for that award — including any demonstration
-content built against it — is deliberately **not** summarized here; per
-the [classification policy](/internal/standards/classification), that
-kind of contract-specific/potentially export-controlled material doesn't
-belong in this docs site at all. See the repository's own internal
-`plan/ROADMAP.md` for where that material actually lives.
-:::

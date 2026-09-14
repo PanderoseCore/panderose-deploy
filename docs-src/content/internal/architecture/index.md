@@ -55,13 +55,18 @@ docs site's Infima theme overrides.
 
 ## Developer docs (`docs-src/` → `docs/`)
 
-Docusaurus, two doc instances (public + internal) sharing one theme.
-**`docs-src/` is the source you edit; `docs/` is generated output you
-never touch by hand** — see [ADR 0003](../standards/adrs/built-output-committed)
-for why the built output is committed instead of built downstream. Full
-detail in [`docs-src/README.md`](https://github.com/PanderoseCore/panderose-deploy/tree/main/docs-src/README.md).
-Short version: `content/public/` → served at `/docs/`; `content/internal/`
-→ `/docs/internal/`, gated; API reference for both is generated from
+Docusaurus. **`docs-src/` is the source you edit; `docs/` is generated
+output you never touch by hand** — see
+[ADR 0003](../standards/adrs/built-output-committed) for why the built
+output is committed instead of built downstream. Full detail in
+[`docs-src/README.md`](https://github.com/PanderoseCore/panderose-deploy/tree/main/docs-src/README.md).
+
+`content/public/` builds to `/docs/`. `content/internal/` exists as
+source but is **not currently compiled into the build** — see
+[ADR 0006](../standards/adrs/shared-bundle-leak) and
+[`docs-src/PLATFORM-REVIEW.md`](https://github.com/PanderoseCore/panderose-deploy/tree/main/docs-src/PLATFORM-REVIEW.md)
+for why, and for the architecture internal docs need before they're
+re-enabled. API reference for the public instance is generated from
 OpenAPI specs in `docs-src/specs/` rather than hand-written.
 
 ## Deploy pipeline
@@ -117,14 +122,14 @@ supersedes it where they'd disagree).
 - `staticwebapp.config.json` sets `X-Content-Type-Options`,
   `X-Frame-Options`, `Referrer-Policy`, and a long-lived HSTS header
   site-wide.
-- `/docs/internal/*` requires the custom `employee` role — confirmed live
-  (returns 401 for anonymous requests) — not Azure's built-in
-  `authenticated` role, which anyone can satisfy via a zero-config login
-  flow (`/.auth/login/github`, etc.) without actually being a Panderose
-  employee. `employee` is invite-only: nobody has it until someone with
-  admin access on the Azure resource invites them via **Role
-  management** in the portal. Also excluded from `robots.txt`/`sitemap.xml`
-  so it isn't indexed regardless.
+- `/docs/internal/*` requires the custom `employee` role, not Azure's
+  built-in `authenticated` role — `authenticated` is satisfied by anyone
+  who completes any zero-config login flow (`/.auth/login/github`, etc.)
+  without actually being a Panderose employee. `employee` is invite-only:
+  nobody has it until someone with admin access on the Azure resource
+  invites them via **Role management** in the portal. Anonymous requests
+  to `/docs/internal/*` return 401. Also excluded from
+  `robots.txt`/`sitemap.xml` so it isn't indexed regardless.
 - No secrets are committed anywhere in this repo. `panderose-deploy`
   holds no Azure deployment token — it can't deploy directly even if a
   workflow here tried to, by design (see ADR 0002's history note).
