@@ -36,7 +36,7 @@ jobs:
           # Need a real ref (not detached-merge) to push a commit back.
           ref: ${{ github.head_ref || github.ref }}
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '20'
           cache: 'npm'
